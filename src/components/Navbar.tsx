@@ -31,7 +31,6 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0B0F19] text-white">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo & Mobile Menu */}
         <div className="flex items-center gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger
@@ -41,12 +40,12 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="start"
-              className="w-48 mt-2 bg-[#0B0F19] border-slate-800 text-white"
+              className="w-48 mt-2 bg-[#7c7f85] border-stone-200 text-white"
             >
               {navItems.map((item) => (
                 <DropdownMenuItem
                   key={item.href}
-                  className="focus:bg-slate-800 focus:text-white"
+                  className="focus:bg-slate-400 focus:text-white"
                 >
                   <Link href={item.href} className="w-full">
                     {item.name}
@@ -72,7 +71,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
@@ -92,7 +90,6 @@ const Navbar = () => {
           })}
         </nav>
 
-        {/* Action Buttons: Sign In & Sign Up */}
         <div className="flex items-center gap-3">
           <Link
             href="/login"
