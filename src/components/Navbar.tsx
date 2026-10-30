@@ -31,16 +31,23 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0B0F19] text-white">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        
         {/* Brand Logo & Mobile Menu */}
         <div className="flex items-center gap-3">
           <DropdownMenu>
-            <DropdownMenuTrigger className={`md:hidden text-white ${buttonVariants({ variant: "ghost", size: "icon" })}`}>
+            <DropdownMenuTrigger
+              className={`md:hidden text-white ${buttonVariants({ variant: "ghost", size: "icon" })}`}
+            >
               <Menu className="h-5 w-5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 mt-2 bg-[#0B0F19] border-slate-800 text-white">
+            <DropdownMenuContent
+              align="start"
+              className="w-48 mt-2 bg-[#0B0F19] border-slate-800 text-white"
+            >
               {navItems.map((item) => (
-                <DropdownMenuItem key={item.href} asChild={false} className="focus:bg-slate-800 focus:text-white">
+                <DropdownMenuItem
+                  key={item.href}
+                  className="focus:bg-slate-800 focus:text-white"
+                >
                   <Link href={item.href} className="w-full">
                     {item.name}
                   </Link>
@@ -51,10 +58,11 @@ const Navbar = () => {
 
           <Link href="/" className="flex items-center gap-2.5">
             <div className="relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden bg-slate-900 border border-slate-800">
-              <Image 
+              <Image
                 src={LoGo}
                 alt="StudioSpace Logo"
-                fill 
+                fill
+                sizes="36px" 
                 className="object-cover"
               />
             </div>
@@ -73,7 +81,9 @@ const Navbar = () => {
                 key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition-colors hover:text-blue-400 ${
-                  isActive ? "text-blue-400 font-semibold border-b-2 border-blue-500 pb-1" : "text-slate-300"
+                  isActive
+                    ? "text-blue-400 font-semibold border-b-2 border-blue-500 pb-1"
+                    : "text-slate-300"
                 }`}
               >
                 {item.name}
@@ -97,7 +107,6 @@ const Navbar = () => {
             Sign Up
           </Link>
         </div>
-
       </div>
     </header>
   );
