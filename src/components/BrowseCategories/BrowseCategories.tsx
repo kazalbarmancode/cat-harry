@@ -2,7 +2,7 @@ import ICategoryType from "@/lib/types/ICategoryType";
 import Link from "next/link";
 
 const BrowseCategories = async () => {
-    const res = await fetch(`${process.env.BACKED_URL}/catagory`, {
+    const res = await fetch(`${process.env.VERCEL_BACKED_URL}/catagory`, {
         cache: "no-store",
     });
     const categories: ICategoryType[] = await res.json();

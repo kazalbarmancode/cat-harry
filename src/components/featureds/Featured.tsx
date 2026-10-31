@@ -3,7 +3,7 @@ import FeaturedsTypes from "@/lib/types/FeaturedTypes";
 import Link from "next/link";
 
 const Featured = async () => {
-  const res = await fetch(`${process.env.BACKED_URL}/featureds`, {
+  const res = await fetch(`${process.env.VERCEL_BACKED_URL}/featureds`, {
     cache: "no-store",
   });
   const featureds: FeaturedsTypes[] = await res.json();

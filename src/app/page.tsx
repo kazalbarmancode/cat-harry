@@ -5,7 +5,10 @@ import HostGuarantee from "@/components/HostGuarantee/HostGuarantee";
 import HowItWork from "@/components/howItWork/HowItWork";
 import { Suspense } from "react";
 
+
+
 export default function Home() {
+  
   return (
     <div>
       <HeroSection></HeroSection>
@@ -31,8 +34,17 @@ export default function Home() {
           <BrowseCategories></BrowseCategories>
         </Suspense>
       </div>
-      <HowItWork></HowItWork>
+      <Suspense fallback={<div className="text-center py-20 text-slate-400">
+              Loading...
+            </div>}>
+        <HowItWork></HowItWork>    
+      </Suspense>
+      <Suspense fallback={<div className="text-center py-20 text-slate-400">
+              Loading...
+            </div> } >
+
       <HostGuarantee></HostGuarantee>
+      </Suspense>
     </div>
   );
 }
