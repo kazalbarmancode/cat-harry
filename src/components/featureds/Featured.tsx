@@ -16,7 +16,7 @@ const Featured = async () => {
           <span className="text-blue-500 font-semibold text-sm tracking-wider uppercase">
             Top Rated Spaces
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold  mt-1">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-1">
             Featured Studios
           </h2>
         </div>
@@ -67,6 +67,11 @@ const Featured = async () => {
                   <p className="text-sm text-slate-400 mt-2 flex items-center gap-1">
                     <span>📍</span> {feat.location}
                   </p>
+                </div>
+                <div>
+                    <p className="text-white">
+                        {feat.description}
+                    </p>
                 </div>
 
                 <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-800">

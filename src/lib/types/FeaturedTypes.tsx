@@ -6,4 +6,14 @@
     pricePerHour:number
     rating:number
     location:string
+    description:string
+    sqft:number
+    amenities:[]
+    capacity:number
+    rules:[]
+    host:{
+        name:string
+        phone:string
+        email:string
+    }
 }
