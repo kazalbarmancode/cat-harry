@@ -21,7 +21,7 @@ interface NavLinkItem {
 const navItems: NavLinkItem[] = [
   { name: "Home", href: "/" },
   { name: "Explore Studios", href: "/studios" },
-  { name: "How It Works", href: "/how-it-works" },
+  { name: "How It Works", href: "#howItWorks" },
   { name: "About Us", href: "/about" },
 ];
 

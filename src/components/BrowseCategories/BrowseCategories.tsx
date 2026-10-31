@@ -14,7 +14,7 @@ const BrowseCategories = async () => {
                     <span className="text-blue-400 font-semibold text-xs tracking-widest uppercase">
                         CURATED PRODUCTION CATEGORIES
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-black mt-1 tracking-tight">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1 tracking-tight">
                         Browse by Creative Discipline
                     </h2>
                 </div>
