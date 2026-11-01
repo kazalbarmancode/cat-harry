@@ -7,9 +7,6 @@ const SignUpPage = () => {
           Create an Account
         </h2>
 
-        {
-          <div className="bg-red-500/20 border border-red-500 text-red-300 p-3 rounded mb-4 text-sm"></div>
-        }
 
         <form className="space-y-4">
           <div>
