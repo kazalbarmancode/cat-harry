@@ -26,7 +26,7 @@ export default function StudioDetailsPage({ params }: Props) {
 async function StudioDetailsContent({ params }: Props) {
   const { id } = await params;
 
-  const res = await fetch(`${process.env.VERCEL_BACKED_URL}/featureds/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/featureds/${id}`, {
     cache: "no-store",
   });
 

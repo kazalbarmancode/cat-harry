@@ -4,7 +4,7 @@ import HowItWorksData from "./HowItWorksData";
 
 const HowItWork = async () => {
     "use cache";
-  const res = await fetch(`${process.env.VERCEL_BACKED_URL}/how_it_works`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/how_it_works`);
   const howItWork: HowItTypes[] = await res.json();
   return (
     <section className="py-16 px-4 md:px-8 border-t border-slate-800/80 bg-[#0B0F19]">
