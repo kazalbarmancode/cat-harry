@@ -1,5 +1,30 @@
+
+"use client"
+import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 const SignUpPage = () => {
+    
+ const handleSubmitSignUp = async (e: React.SubmitEvent<HTMLElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const user = Object.fromEntries(formData.entries()) as {
+      name: string;
+      image: string;
+      email: string;
+      password: string;
+    };
+    const { data, error } = await signUp.email({
+      ...user,
+    });
+    if (data) {
+      redirect('/')
+    }
+    if (error) {
+      console.log(error);
+    }
+    console.log(data)
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md">
@@ -8,7 +33,7 @@ const SignUpPage = () => {
         </h2>
 
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmitSignUp}>
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
             <input
@@ -51,7 +76,7 @@ const SignUpPage = () => {
               placeholder="••••••••"
             />
             <p className="text-xs text-gray-400 mt-1">
-              Must have Uppercase, Lowercase & min 6 characters.
+              Must have 6 characters.
             </p>
           </div>
 
@@ -59,7 +84,7 @@ const SignUpPage = () => {
             type="submit"
             className="w-full bg-lime-400 text-gray-900 font-semibold py-2.5 rounded hover:bg-lime-300 transition duration-200"
           >
-            Register
+            Sign Up
           </button>
         </form>
 
