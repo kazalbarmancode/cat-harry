@@ -7,7 +7,6 @@ const Featured = async () => {
     cache: "no-store",
   });
   const featureds: FeaturedsTypes[] = await res.json();
-  console.log(featureds);
 
   return (
     <section className="py-16 px-4 max-w-7xl mx-auto">

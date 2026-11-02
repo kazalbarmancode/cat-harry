@@ -1,4 +1,3 @@
-import React from "react";
 import AllCard from "../allCard/AllCard";
 import Link from "next/link";
 import FeaturedsTypes from "@/lib/types/FeaturedTypes";
@@ -13,7 +12,7 @@ const StudiosContent = async ({ searchParams }: Props) => {
   const resolvedParams = await searchParams;
   const selectedCategory = resolvedParams?.category || "";
 
-  const catRes = await fetch(`${process.env.VERCEL_BACKED_URL}/catagory`, {
+  const catRes = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/catagory`, {
     cache: "no-store",
   });
   const categoryCards = await catRes.json();

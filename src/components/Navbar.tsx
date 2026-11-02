@@ -1,6 +1,6 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +12,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LoGo from "../../public/Logo.png";
+import {  signOut, useSession } from "@/lib/auth-client";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "./ui/popover";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface NavLinkItem {
   name: string;
   href: string;
 }
 
-const navItems: NavLinkItem[] = [
-  { name: "Home", href: "/" },
-  { name: "Explore Studios", href: "/studios" },
-  { name: "How It Works", href: "#howItWorks" },
-  { name: "About Us", href: "/about" },
-];
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  console.log(session)
 
+  const user = session?.user;
+  const handleSignout = async() => {
+   await signOut();
+  };
+ const navItems: NavLinkItem[] = [
+    { name: "Home", href: "/" },
+    { name: "Explore Studios", href: "/studios" },
+    ...(user ? [{ name: "Add Studio", href: "/studioPage" }] : []),
+    { name: "How It Works", href: "#howItWorks" },
+    { name: "About Us", href: "/about" },
+  ];
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0B0F19] text-white">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -61,7 +78,7 @@ const Navbar = () => {
                 src={LoGo}
                 alt="StudioSpace Logo"
                 fill
-                sizes="36px" 
+                sizes="36px"
                 className="object-cover"
               />
             </div>
@@ -89,20 +106,63 @@ const Navbar = () => {
             );
           })}
         </nav>
-
-        <div className="flex items-center gap-3">
-          <Link
-            href="/signIn"
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/signUp"
-            className={buttonVariants({ variant: "default", size: "sm" })}
-          >
-            Sign Up
-          </Link>
+        <div className="flex items-center gap-4">
+          {user ? (
+            <Popover>
+              <PopoverTrigger className="cursor-pointer">
+                <Avatar>
+                  <AvatarImage
+                    referrerPolicy="no-referrer"
+                    src={user?.image || ""}
+                    alt={user?.name || "User"}
+                  />
+                  <AvatarFallback className="bg-slate-700 text-white">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 bg-slate-900 border-slate-800 text-white p-4">
+                <PopoverHeader className="space-y-1">
+                  <PopoverTitle className="text-sm font-semibold text-white">
+                    {user?.name}
+                  </PopoverTitle>
+                  <PopoverDescription className="text-xs text-slate-400 truncate">
+                    {user?.email}
+                  </PopoverDescription>
+                </PopoverHeader>
+                <div className="mt-4 border-t border-slate-800 pt-3">
+                  <Button
+                    onClick={handleSignout}
+                    variant="destructive"
+                    size="sm"
+                    className="w-full bg-amber-600 hover:none text-white"
+                  >
+                    Sign Out
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/signIn"
+                  className="text-sm text-slate-300 transition-colors hover:text-blue-400"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signUp"
+                  className={`text-sm ${buttonVariants({
+                    variant: "default",
+                    size: "sm",
+                  })} bg-blue-600 hover:bg-blue-700 text-white`}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </header>

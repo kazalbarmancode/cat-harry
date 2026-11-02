@@ -3,47 +3,33 @@ import Featured from "@/components/featureds/Featured";
 import HeroSection from "@/components/homePage/HeroSection";
 import HostGuarantee from "@/components/HostGuarantee/HostGuarantee";
 import HowItWork from "@/components/howItWork/HowItWork";
+import LoadingSpinner from "@/components/Loading";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
+export const instant = false;
 
-
-export default function Home() {
+export default async function Home() {
+  await connection();
   
   return (
-    <div>
-      <HeroSection></HeroSection>
-      <div className="bg-[#0B0F19] min-h-screen">
-        <Suspense
-          fallback={
-            <div className="text-center py-20 text-slate-400">
-              Loading featured studios...
-            </div>
-          }
-        >
-          <Featured />
-        </Suspense>
-      </div>
-      <div>
-        <Suspense
-          fallback={
-            <div className="text-center py-20 text-slate-400">
-              Loading Categories...
-            </div>
-          }
-        >
-          <BrowseCategories></BrowseCategories>
-        </Suspense>
-      </div>
-      <Suspense fallback={<div className="text-center py-20 text-slate-400">
-              Loading...
-            </div>}>
-        <HowItWork></HowItWork>    
-      </Suspense>
-      <Suspense fallback={<div className="text-center py-20 text-slate-400">
-              Loading...
-            </div> } >
+    <div className="bg-[#0B0F19] text-white">
+      <HeroSection />
 
-      <HostGuarantee></HostGuarantee>
+      <Suspense fallback={<LoadingSpinner text="Loading featured studios..." />}>
+        <Featured />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner text="Exploring categories..." />}>
+        <BrowseCategories />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner text="Loading how it works..." />}>
+        <HowItWork />    
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner text="Loading guarantee info..." />}>
+        <HostGuarantee />
       </Suspense>
     </div>
   );

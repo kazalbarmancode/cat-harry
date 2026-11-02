@@ -151,9 +151,9 @@ async function StudioDetailsContent({ params }: Props) {
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 ">
             
-            <div className="bg-gradient from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6  top-8 shadow-2xl">
+            <div className="bg-blue-950 from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6  top-8 shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                   <span className="text-xs text-slate-400">Hourly Rate</span>
@@ -167,9 +167,11 @@ async function StudioDetailsContent({ params }: Props) {
                 </span>
               </div>
 
-              <button className="w-full py-4 bg-gradient from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98]">
+             <Link href={'/booking'}>
+              <button className="w-full py-4 bg-blue-600 from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98]">
                 Request Booking
               </button>
+             </Link>
             </div>
 
           </div>
