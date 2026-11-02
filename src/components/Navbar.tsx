@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LoGo from "../../public/Logo.png";
-import {  signOut, useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 import {
   Popover,
   PopoverContent,
@@ -28,22 +28,21 @@ interface NavLinkItem {
   href: string;
 }
 
-
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
-  console.log(session)
+  console.log(session);
 
   const user = session?.user;
-  const handleSignout = async() => {
-   await signOut();
+  const handleSignout = async () => {
+    await signOut();
   };
- const navItems: NavLinkItem[] = [
+  const navItems: NavLinkItem[] = [
     { name: "Home", href: "/" },
     { name: "Explore Studios", href: "/studios" },
     ...(user ? [{ name: "Add Studio", href: "/studioPage" }] : []),
-    { name: "How It Works", href: "#howItWorks" },
-    { name: "About Us", href: "/about" },
+    { name: "How It Works", href: "/#howItWorks" },
+    { name: "About Us", href: "/about-page" },
   ];
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0B0F19] text-white">

@@ -2,10 +2,10 @@ import BrowseCategories from "@/components/BrowseCategories/BrowseCategories";
 import Featured from "@/components/featureds/Featured";
 import HeroSection from "@/components/homePage/HeroSection";
 import HostGuarantee from "@/components/HostGuarantee/HostGuarantee";
-import HowItWork from "@/components/howItWork/HowItWork";
 import LoadingSpinner from "@/components/Loading";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import HowItWorkPage from "./how-it-work/page";
 
 export const instant = false;
 
@@ -25,7 +25,7 @@ export default async function Home() {
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner text="Loading..." />}>
-        <HowItWork />    
+        <HowItWorkPage></HowItWorkPage>
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner text="Loading..." />}>

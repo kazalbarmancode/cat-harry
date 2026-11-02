@@ -1,13 +1,13 @@
-import { HowItTypes } from "@/lib/types/HowItTypes";
-import { Suspense } from "react";
-import HowItWorksData from "./HowItWorksData";
+import HowItWorksData from '@/components/howItWork/HowItWorksData';
+import { HowItTypes } from '@/lib/types/HowItTypes';
+import React, { Suspense } from 'react';
 
-const HowItWork = async () => {
-    "use cache";
+const HowItWorkPage =async () => {
+   "use cache";
   const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/how_it_works`);
   const howItWork: HowItTypes[] = await res.json();
   return (
-    <section className="py-16 px-4 md:px-8 border-t border-slate-800/80 bg-[#0B0F19]">
+    <section id="howItWorks" className="py-16 px-4 md:px-8 border-t border-slate-800/80 bg-[#0B0F19]">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center space-y-3 max-w-xl mx-auto">
           <span className="text-blue-400 font-semibold text-xs tracking-widest uppercase bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
@@ -35,4 +35,4 @@ const HowItWork = async () => {
   );
 };
 
-export default HowItWork;
+export default HowItWorkPage;

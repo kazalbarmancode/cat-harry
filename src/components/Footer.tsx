@@ -147,7 +147,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/studios`?category=music"
+                  href="/studios?category=music"
                   className="hover:text-blue-400 transition-colors"
                 >
                   Soundproof Music Suite
@@ -181,7 +181,7 @@ const Footer = () => {
           <p>©2026 StudioSpace. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link
-              href="/privacy"
+              href="/privacyPolicyPage"
               className="hover:text-slate-400 transition-colors"
             >
               Privacy Policy
