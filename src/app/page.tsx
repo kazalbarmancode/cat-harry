@@ -16,19 +16,19 @@ export default async function Home() {
     <div className="bg-[#0B0F19] text-white">
       <HeroSection />
 
-      <Suspense fallback={<LoadingSpinner text="Loading featured studios..." />}>
+      <Suspense fallback={<LoadingSpinner text="Loading..." />}>
         <Featured />
       </Suspense>
 
-      <Suspense fallback={<LoadingSpinner text="Exploring categories..." />}>
+      <Suspense fallback={<LoadingSpinner text="Exploring..." />}>
         <BrowseCategories />
       </Suspense>
 
-      <Suspense fallback={<LoadingSpinner text="Loading how it works..." />}>
+      <Suspense fallback={<LoadingSpinner text="Loading..." />}>
         <HowItWork />    
       </Suspense>
 
-      <Suspense fallback={<LoadingSpinner text="Loading guarantee info..." />}>
+      <Suspense fallback={<LoadingSpinner text="Loading..." />}>
         <HostGuarantee />
       </Suspense>
     </div>

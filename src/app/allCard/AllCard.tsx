@@ -1,22 +1,32 @@
-import FeaturedsTypes from '@/lib/types/FeaturedTypes';
-import Image from 'next/image';
-import Link from 'next/link';
+import FeaturedsTypes from "@/lib/types/FeaturedTypes";
+import Image from "next/image";
+import Link from "next/link";
 
 interface AllCardProps {
   feat: FeaturedsTypes;
 }
 
 const AllCard = ({ feat }: AllCardProps) => {
-  const { image, title, category, rating, description, location, pricePerHour, _id } = feat;
+  const {
+    image,
+    title,
+    category,
+    rating,
+    description,
+    location,
+    pricePerHour,
+    _id,
+  } = feat;
 
   return (
-    <div
-      className="group bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-950/20 flex flex-col justify-between"
-    >
+    <div className="group bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-950/20 flex flex-col justify-between">
       <div>
         <div className="relative h-56 w-full overflow-hidden">
           <Image
-            src={image || "https://images.unsplash.com/photo-1590602847861-f357a9332bbc"}
+            src={
+              image ||
+              "https://images.unsplash.com/photo-1590602847861-f357a9332bbc"
+            }
             alt={title || "Studio"}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -37,19 +47,16 @@ const AllCard = ({ feat }: AllCardProps) => {
           <p className="text-sm text-slate-400 flex items-center gap-1">
             <span>📍</span> {location}
           </p>
-          <p className="text-sm text-slate-300 line-clamp-2">
-            {description}
-          </p>
+          <p className="text-sm text-slate-300 line-clamp-2">{description}</p>
         </div>
       </div>
 
       <div className="p-5 pt-0 flex items-center justify-between mt-4 border-t border-slate-800">
         <div>
-          <span className="text-2xl font-bold text-white">
-            ${pricePerHour}
-          </span>
+          <span className="text-2xl font-bold text-white">${pricePerHour}</span>
           <span className="text-xs text-slate-400"> / hr</span>
         </div>
+       
 
         <Link
           href={`/studios/${_id}`}

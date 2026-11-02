@@ -65,48 +65,41 @@ const AddStudioPage = () => {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!user?.email) {
+      toast.error("Please wait, user session is still loading!");
+      return;
+    }
+
     setLoading(true);
 
-    // সাবমিট করার সময় ফর্মের ডেটার সাথে ইউজারের নাম ও ইমেইল যুক্ত করে পাঠানো হচ্ছে
-    const finalData = {
+    const submissionData = {
       ...form,
-      ownerName: user?.name || "",
-      ownerEmail: user?.email || "",
+      ownerEmail: user.email,
+      ownerName: user.name || "Host",
     };
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finalData),
-        },
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submissionData), 
+      });
 
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const errorText = await res.text();
-        console.error("Server HTML Error Response:", errorText);
-        throw new Error("Backend server error! Check console for details.");
-      }
+      const data = await res.json();
 
-      const result = await res.json();
-      if (res.ok) {
+      if (data.success || data.insertedId) {
         toast.success("Studio added successfully!");
         router.push("/listingPage");
+        router.refresh(); 
       } else {
-        toast.error(result.message || "Failed to add studio.");
+        toast.error(data.message || "Failed to add studio");
       }
-    } catch (error) {
-      console.error(error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Something went wrong!";
-      toast.error(errorMessage);
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }

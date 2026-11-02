@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, DollarSign, Trash2 } from "lucide-react";
+import { MapPin, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
@@ -24,7 +24,6 @@ export default function MyListingsPage() {
   const [studios, setStudios] = useState<Studio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // User login thakle tar email diye shudhu tar studio-gulo fetch korbe
   useEffect(() => {
     if (user?.email) {
       fetch(
@@ -103,9 +102,7 @@ export default function MyListingsPage() {
               key={studio._id}
               className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-md transition-shadow"
             >
-              {/* Left & Middle: Image, Title, Category, Rate ek shathe row borabor */}
               <div className="flex flex-col md:flex-row items-center gap-5 w-full">
-                {/* Image */}
                 <div className="relative h-24 w-full md:w-36 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
                   <Image
                     src={studio.image || "https://via.placeholder.com/400x250"}
@@ -115,7 +112,6 @@ export default function MyListingsPage() {
                   />
                 </div>
 
-                {/* Details Flex Row */}
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between w-full gap-4">
                   <div className="space-y-1">
                     <span className="inline-block bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs px-2.5 py-0.5 rounded-full font-medium">
@@ -132,19 +128,20 @@ export default function MyListingsPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 w-full md:w-auto justify-end shrink-0">
-                <Link href={`/studios/${studio._id}`} className="w-full md:w-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 items-center gap-2.5 w-full md:w-auto justify-end shrink-0">
+                <Link href={`/edit-studio/${studio._id}`} className="w-full">
                   <Button
                     variant="outline"
-                    className="w-full md:w-auto text-sm border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className="w-full text-sm font-medium border-blue-500/30 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all duration-200"
                   >
-                    View Details
+                    Edit Studio
                   </Button>
                 </Link>
+
                 <Button
                   onClick={() => handleDelete(studio._id)}
                   variant="destructive"
-                  className="w-full md:w-auto flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-sm"
+                  className="w-full flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-sm transition-all duration-200"
                 >
                   <Trash2 className="w-4 h-4" /> Delete
                 </Button>

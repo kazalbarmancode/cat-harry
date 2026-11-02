@@ -18,8 +18,8 @@ const StudiosContent = async ({ searchParams }: Props) => {
   const categoryCards = await catRes.json();
 
   const url = selectedCategory
-    ? `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/allFeatureds?category=${encodeURIComponent(selectedCategory)}`
-    : `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/allFeatureds`;
+    ? `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/allStudioData?category=${encodeURIComponent(selectedCategory)}`
+    : `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/allStudioData`;
 
   const res = await fetch(url, { cache: "no-store" });
   const studios: FeaturedsTypes[] = await res.json();
