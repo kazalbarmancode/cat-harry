@@ -47,7 +47,6 @@ async function StudioDetailsContent({ params }: Props) {
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 py-10 px-4 md:px-8">
       <div className="max-w-7xl mx-auto space-y-10">
         
-        {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-slate-400">
           <Link href="/" className="hover:text-blue-400 transition-colors">
             Home
@@ -60,7 +59,6 @@ async function StudioDetailsContent({ params }: Props) {
           <span className="text-blue-400 truncate max-w-xs">{studio?.title}</span>
         </div>
 
-        {/* Header Title Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
           <div>
             <span className="text-xs uppercase font-bold tracking-widest px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">

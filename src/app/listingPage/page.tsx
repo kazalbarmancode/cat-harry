@@ -1,0 +1,158 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { MapPin, DollarSign, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
+
+interface Studio {
+  _id: string;
+  title: string;
+  category: string;
+  location: string;
+  hourlyRate: number | string;
+  image: string;
+  ownerEmail: string;
+}
+
+export default function MyListingsPage() {
+  const { data: session } = useSession();
+  const user = session?.user;
+  const [studios, setStudios] = useState<Studio[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // User login thakle tar email diye shudhu tar studio-gulo fetch korbe
+  useEffect(() => {
+    if (user?.email) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/email?email=${user.email}`,
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setStudios(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching user listings:", error);
+          setLoading(false);
+        });
+    }
+  }, [user?.email]);
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/${id}`,
+        { method: "DELETE" },
+      );
+      const data = await res.json();
+      if (data.deletedCount > 0 || res.ok) {
+        setStudios((prev) => prev.filter((s) => s._id !== id));
+        toast.success("Studio deleted successfully!");
+      } else {
+        toast.error("Failed to delete studio.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong!");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center text-slate-500">
+        Loading your listings...
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            My Studio Listings
+          </h1>
+          <p className="text-slate-500 text-sm mt-1">
+            Manage the studio spaces you have added.
+          </p>
+        </div>
+        <Link href="/studioPage">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            + Add New Studio
+          </Button>
+        </Link>
+      </div>
+
+      {studios.length === 0 ? (
+        <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-12 text-center">
+          <p className="text-slate-500 mb-4">
+            You have not added any studio spaces yet.
+          </p>
+          <Link href="/studioPage">
+            <Button variant="outline">Create your first listing</Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4">
+          {studios.map((studio) => (
+            <div
+              key={studio._id}
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-md transition-shadow"
+            >
+              {/* Left & Middle: Image, Title, Category, Rate ek shathe row borabor */}
+              <div className="flex flex-col md:flex-row items-center gap-5 w-full">
+                {/* Image */}
+                <div className="relative h-24 w-full md:w-36 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+                  <Image
+                    src={studio.image || "https://via.placeholder.com/400x250"}
+                    alt={studio.title || "Studio Image"}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Details Flex Row */}
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between w-full gap-4">
+                  <div className="space-y-1">
+                    <span className="inline-block bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs px-2.5 py-0.5 rounded-full font-medium">
+                      {studio.category}
+                    </span>
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1">
+                      {studio.title}
+                    </h2>
+                    <div className="flex items-center gap-1 text-slate-500 text-xs">
+                      <MapPin className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                      <span className="line-clamp-1">{studio.location}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 w-full md:w-auto justify-end shrink-0">
+                <Link href={`/studios/${studio._id}`} className="w-full md:w-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full md:w-auto text-sm border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  >
+                    View Details
+                  </Button>
+                </Link>
+                <Button
+                  onClick={() => handleDelete(studio._id)}
+                  variant="destructive"
+                  className="w-full md:w-auto flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-sm"
+                >
+                  <Trash2 className="w-4 h-4" /> Delete
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

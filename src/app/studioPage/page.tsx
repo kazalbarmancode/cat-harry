@@ -13,7 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import toast from "react-hot-toast";
-import { PackageCheck, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useSession } from "@/lib/auth-client";
 
 const categories = [
   "Photo Studio",
@@ -31,29 +32,27 @@ const availableAmenities = [
   "Parking",
 ];
 
-const initialForm = {
-  title: "",
-  category: "",
-  location: "",
-  hourlyRate: "",
-  securityDeposit: "",
-  maxCapacity: "",
-  overview: "",
-  image: "",
-  amenities: [] as string[],
-  userEmail: "user@example.com",
-  userName: "John Doe",
-};
-
 const AddStudioPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState(initialForm);
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  const [form, setForm] = useState({
+    title: "",
+    category: "",
+    location: "",
+    hourlyRate: "",
+    securityDeposit: "",
+    maxCapacity: "",
+    overview: "",
+    image: "",
+    amenities: [] as string[],
+  });
 
   const update = (field: keyof typeof form, value: string | string[]) =>
     setForm((current) => ({ ...current, [field]: value }));
 
-  // Amenities Checkbox Handler
   const handleAmenityToggle = (amenity: string) => {
     const current = form.amenities;
     if (current.includes(amenity)) {
@@ -70,6 +69,13 @@ const AddStudioPage = () => {
     event.preventDefault();
     setLoading(true);
 
+    // সাবমিট করার সময় ফর্মের ডেটার সাথে ইউজারের নাম ও ইমেইল যুক্ত করে পাঠানো হচ্ছে
+    const finalData = {
+      ...form,
+      ownerName: user?.name || "",
+      ownerEmail: user?.email || "",
+    };
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData`,
@@ -78,11 +84,10 @@ const AddStudioPage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify(finalData),
         },
       );
 
-      // Response JSON na hole asol text-ta console-e dekhabe
       const contentType = res.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
         const errorText = await res.text();
@@ -93,7 +98,7 @@ const AddStudioPage = () => {
       const result = await res.json();
       if (res.ok) {
         toast.success("Studio added successfully!");
-        router.push("/my-listings");
+        router.push("/listingPage");
       } else {
         toast.error(result.message || "Failed to add studio.");
       }
@@ -109,13 +114,17 @@ const AddStudioPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Add New Studio</h1>
+      <Link href={'/studioPage'}>
+        <h1 className="text-2xl font-bold mb-6">Add New Studio</h1>
+      </Link>
+      <Link href={'/listingPage'} className="my-3">
+        <Button className='bg-blue-600'>Back To My List</Button>
+      </Link>
       <form
         onSubmit={handleSubmit}
-        className="rounded-sm border border-border bg-white p-8 shadow-sm"
+        className="rounded-sm border border-border my-3 bg-white p-8 shadow-sm"
       >
         <div className="grid gap-5">
-          {/* Studio Title */}
           <div className="grid gap-2">
             <Label htmlFor="title">Studio Title</Label>
             <Input
@@ -127,7 +136,6 @@ const AddStudioPage = () => {
             />
           </div>
 
-          {/* Category + Location */}
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label>Category</Label>
@@ -164,7 +172,6 @@ const AddStudioPage = () => {
             </div>
           </div>
 
-          {/* Rates & Capacity */}
           <div className="grid gap-5 sm:grid-cols-3">
             <div className="grid gap-2">
               <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
@@ -205,7 +212,6 @@ const AddStudioPage = () => {
             </div>
           </div>
 
-          {/* Image URL */}
           <div className="grid gap-2">
             <Label htmlFor="image">Image URL</Label>
             <Input
@@ -218,7 +224,6 @@ const AddStudioPage = () => {
             />
           </div>
 
-          {/* Amenities Checkboxes */}
           <div className="grid gap-2">
             <Label>Amenities</Label>
             <div className="flex flex-wrap gap-4 pt-1">
@@ -239,7 +244,6 @@ const AddStudioPage = () => {
             </div>
           </div>
 
-          {/* Detailed Overview */}
           <div className="grid gap-2">
             <Label htmlFor="overview">Detailed Overview</Label>
             <Textarea
@@ -252,45 +256,38 @@ const AddStudioPage = () => {
             />
           </div>
 
-          {/* Read-only User Info */}
-          <div className="grid gap-5 sm:grid-cols-2 bg-gray-50 p-4 rounded-md">
-            <div className="grid gap-2">
-              <Label>User Name (Read-only)</Label>
-              <Input
-                value={form.userName}
-                readOnly
-                className="bg-gray-100 cursor-not-allowed"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label>User Email (Read-only)</Label>
-              <Input
-                value={form.userEmail}
-                readOnly
-                className="bg-gray-100 cursor-not-allowed"
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              User Name 
+            </label>
+            <input
+              type="text"
+              name="ownerName"
+              value={user?.name || "Loading..."} 
+              readOnly
+              className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"
+            />
           </div>
-        </div>
 
-        {/* Actions */}
-        <div className="mt-8 flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.push("/my-listings")}
-            className="border-destructive/30 bg-background text-destructive hover:bg-destructive/5 hover:text-destructive"
-          >
-            <Trash2 className="w-4 h-4 mr-1" />
-            Cancel
-          </Button>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              User Email 
+            </label>
+            <input
+              type="email"
+              name="ownerEmail"
+              value={user?.email || "Loading..."}
+              readOnly
+              className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"
+            />
+          </div>
+
           <Button
             type="submit"
             disabled={loading}
-            className="bg-[#00A8E8] text-white hover:bg-[#0095d1]"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-colors"
           >
-            <PackageCheck className="w-4 h-4 mr-1" />
-            {loading ? "Adding Studio..." : "Add Studio"}
+            {loading ? "Submitting..." : "Submit Listing"}
           </Button>
         </div>
       </form>
