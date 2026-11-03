@@ -39,7 +39,7 @@ function EditStudioFormContent() {
   const studioId = params?.id as string;
   const router = useRouter();
 
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const { data: session } = useSession();
   const user = session?.user;

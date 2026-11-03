@@ -1,6 +1,7 @@
+
 import HowItWorksData from '@/components/howItWork/HowItWorksData';
 import { HowItTypes } from '@/lib/types/HowItTypes';
-import React, { Suspense } from 'react';
+import  { Suspense } from 'react';
 
 const HowItWorkPage =async () => {
    "use cache";

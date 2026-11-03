@@ -8,7 +8,6 @@ interface AllCardProps {
 
 const AllCard = ({ feat }: AllCardProps) => {
   const {
-    image,
     title,
     category,
     rating,

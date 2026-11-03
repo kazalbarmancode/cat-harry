@@ -1,7 +1,7 @@
 import { authClient } from "./auth-client";
 
 const getTokenClient =async () => {
-   const { data, error } = await authClient.token()
+   const { data } = await authClient.token()
 
 
   const token = data?.token
