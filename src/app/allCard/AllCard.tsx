@@ -23,13 +23,11 @@ const AllCard = ({ feat }: AllCardProps) => {
       <div>
         <div className="relative h-56 w-full overflow-hidden">
           <Image
-            src={
-              image ||
-              "https://images.unsplash.com/photo-1590602847861-f357a9332bbc"
-            }
-            alt={title || "Studio"}
+            src={feat.image}
+            alt={feat.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
           />
           <span className="absolute top-4 left-4 bg-blue-600/95 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">
             {category}
@@ -56,7 +54,6 @@ const AllCard = ({ feat }: AllCardProps) => {
           <span className="text-2xl font-bold text-white">${pricePerHour}</span>
           <span className="text-xs text-slate-400"> / hr</span>
         </div>
-       
 
         <Link
           href={`/studios/${_id}`}

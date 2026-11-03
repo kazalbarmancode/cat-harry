@@ -7,12 +7,11 @@ export async function proxy(request: NextRequest) {
     headers: await headers(),
   });
   const user = session?.user;
-  console.log(user);
   if (!user) {
     return NextResponse.redirect(new URL("/signIn", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/studioPage", "/my-bookings", "/booking/:path*"],
+  matcher: ["/booking","/studioPage","/listingPage","/edit-studio","/booking/:path*"],
 };

@@ -7,7 +7,8 @@ interface Props {
   }>;
 }
 
-export default function StudiosPage({ searchParams }: Props) {
+export default  function StudiosPage({ searchParams }: Props) {
+
   return (
     <Suspense
       fallback={

@@ -3,8 +3,8 @@
 import IBooking from "@/lib/types/IBookLType";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, MapPin, DollarSign, Trash2 } from "lucide-react";
-import toast from "react-hot-toast"; 
+import { Calendar, MapPin, DollarSign, Trash2, ArrowRight } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface BookingCardProps {
   booking: IBooking;
@@ -13,16 +13,17 @@ interface BookingCardProps {
 
 export default function BookingCard({ booking, onDelete }: BookingCardProps) {
   const {
-    _id,
-    studioId,
-    studioTitle,
-    image,
-    price,
-    location,
-    date,
-    status = "Pending",
-  } = booking 
-
+  _id,
+  studioId,
+  studioTitle,
+  image,
+  price,
+pricePerHour,
+  location,
+  date,
+  status = "Pending",
+} = booking;
+const displayPrice = price || pricePerHour
   const getBadgeStyle = (currentStatus: string) => {
     switch (currentStatus) {
       case "Pending":
@@ -43,20 +44,22 @@ export default function BookingCard({ booking, onDelete }: BookingCardProps) {
     if (!confirm("Are you sure you want to delete this booking?")) return;
 
     try {
-     
-      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/my-bookings/${_id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${_id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       const data = await res.json();
-
+      console.log("booking card", data);
       if (res.ok || data.deletedCount > 0 || data.success) {
-        toast.success("Booking deleted successfully!"); 
+        toast.success("Booking deleted successfully!");
         if (onDelete) {
           onDelete(_id);
         }
       } else {
-        toast.error("Failed to delete booking"); 
+        toast.error("Failed to delete booking");
       }
     } catch (error) {
       console.error("Delete error:", error);
@@ -65,9 +68,9 @@ export default function BookingCard({ booking, onDelete }: BookingCardProps) {
   };
 
   return (
-    <div className="group bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 shadow-sm flex flex-col sm:flex-row justify-between items-stretch">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-5 w-full">
-        <div className="relative h-32 w-full sm:w-36 overflow-hidden rounded-xl shrink-0">
+    <div className="group relative bg-gradient from-slate-900/90 via-slate-900/70 to-slate-950/90 border border-slate-800/80 hover:border-blue-500/40 rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 flex flex-col sm:flex-row justify-between items-stretch">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-5 sm:p-6 w-full">
+        <div className="relative h-36 w-full sm:w-40 overflow-hidden rounded-2xl shrink-0 shadow-inner border border-slate-800">
           <Image
             src={
               image ||
@@ -75,58 +78,72 @@ export default function BookingCard({ booking, onDelete }: BookingCardProps) {
             }
             alt={studioTitle || "Studio"}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, 160px"
+            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
+          <div className="absolute inset-y-0 left-0 w-full bg-gradient from-black/40 via-transparent to-transparent opacity-60" />
+
           <span
-            className={`absolute top-2 left-2 backdrop-blur-md text-[10px] font-semibold px-2 py-0.5 rounded-full border ${getBadgeStyle(
-              status
+            className={`absolute top-2.5 left-2.5 backdrop-blur-md text-[11px] font-bold px-2.5 py-1 rounded-full border shadow-md ${getBadgeStyle(
+              status,
             )}`}
           >
             {status}
           </span>
         </div>
 
-        <div className="space-y-1.5 flex-1">
-          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
-            {studioTitle}
+        <div className="space-y-2 flex-1">
+          <h3 className="text-xl font-bold  transition-colors ">
+            {studioTitle || "Studio Title"}
           </h3>
-          <p className="text-sm text-slate-400 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-slate-500" /> {location}
+
+          <p className="text-sm text-slate-300 flex items-center gap-2">
+            <span className="p-1 rounded-lg bg-slate-800 text-blue-400">
+              <MapPin className="w-3.5 h-3.5" />
+            </span>
+            {location || "Location not available"}
           </p>
-          <p className="text-sm text-slate-300 flex items-center gap-1.5">
-            <Calendar className="w-4 h-4 text-blue-400" /> Date:{" "}
-            <strong className="text-white">{date}</strong>
+
+          <p className="text-sm text-slate-300 flex items-center gap-2">
+            <span className="p-1 rounded-lg bg-slate-800 text-amber-400">
+              <Calendar className="w-3.5 h-3.5" />
+            </span>
+            Date:{" "}
+            <strong className="text-white font-medium bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700">
+              {date}
+            </strong>
           </p>
         </div>
       </div>
 
-      <div className="p-5 sm:border-l border-t sm:border-t-0 border-slate-800 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 bg-slate-950/40 shrink-0">
-        <div>
-          <span className="text-2xl font-bold text-red-600 flex items-center">
-            <DollarSign className="w-5 h-5 text-emerald-400 inline" />
-            {price}
-          </span>
-          <span className="text-xs text-slate-400 pl-1">per hour</span>
+      <div className="p-5 sm:p-6 sm:border-l border-t sm:border-t-0 border-slate-800/80 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 bg-slate-950/30 shrink-0">
+        <div className="text-left sm:text-right">
+          <div className="flex items-center sm:justify-end text-2xl font-black text-black tracking-tight">
+            <DollarSign className="w-5 h-5 text-emerald-500 inline -mr-1" />
+            {displayPrice}
+            <span className="text-xs font-normal text-red-600 ml-1">/hr</span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {_id && (
             <button
               onClick={handleDeleteClick}
-              className="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
               title="Delete Booking"
             >
               <Trash2 className="w-4 h-4" />
-              <span>Delete</span>
+              <span className="hidden xs:inline">Remove</span>
             </button>
           )}
 
           {studioId && (
             <Link
               href={`/studios/${studioId}`}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/20 active:scale-95 text-center"
+              className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-blue-600/25 active:scale-95 flex items-center gap-1.5 group/btn"
             >
-              View Studio
+              <span>View Studio</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
             </Link>
           )}
         </div>

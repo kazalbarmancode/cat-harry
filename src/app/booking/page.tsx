@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import IBooking from "@/lib/types/IBookLType";
 import MyBookingsList from "@/components/BookingList";
 
-
 async function BookingsContent() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
@@ -19,7 +18,8 @@ async function BookingsContent() {
       </div>
     );
   }
-  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/my-bookings/${user.email}`, {
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${user.email}`, {
     cache: "no-store",
   });
 
@@ -28,12 +28,13 @@ async function BookingsContent() {
 
   return (
     <div>
-      <Suspense fallback={ <div>Loading...</div> }>
-        <MyBookingsList initialBookings={bookings} />;
+      <Suspense fallback={<div>Loading...</div>}>
+        <MyBookingsList initialBookings={bookings} />
       </Suspense>
     </div>
   );
 }
+
 export default function MyBookingsPage() {
   return (
     <div className="container mx-auto max-w-5xl py-10 px-4 md:px-6">

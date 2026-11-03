@@ -27,7 +27,7 @@ export default function MyListingsPage() {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/email?email=${user.email}`,
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/email?email=${user.email}`,
       )
         .then((res) => res.json())
         .then((data) => {
@@ -44,7 +44,7 @@ export default function MyListingsPage() {
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/${id}`,
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${id}`,
         { method: "DELETE" },
       );
       const data = await res.json();

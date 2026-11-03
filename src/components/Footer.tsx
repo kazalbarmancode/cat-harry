@@ -99,7 +99,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/how-it-works"
+                  href="/how-it-work"
                   className="hover:text-blue-400 transition-colors"
                 >
                   How It Works
@@ -107,7 +107,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/about-page"
                   className="hover:text-blue-400 transition-colors"
                 >
                   About Us

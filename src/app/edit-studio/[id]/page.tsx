@@ -59,7 +59,7 @@ function EditStudioFormContent() {
 
   useEffect(() => {
     if (studioId) {
-      fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/${studioId}`)
+      fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`)
         .then(async (res) => {
           const text = await res.text();
           return text ? JSON.parse(text) : null;
@@ -111,7 +111,7 @@ function EditStudioFormContent() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/${studioId}`,
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`,
         {
           method: "PATCH",
           headers: {

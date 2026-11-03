@@ -82,7 +82,7 @@ const AddStudioPage = () => {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(submissionData), 

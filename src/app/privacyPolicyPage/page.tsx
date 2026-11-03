@@ -13,7 +13,6 @@ const PrivacyPolicyPage = () => {
   <div className="min-h-screen bg-[#0B0F19] text-slate-100 py-16 px-4 sm:px-6 lg:px-8">
       <div className="container max-w-4xl mx-auto space-y-12">
         
-        {/* Back Link */}
         <div>
           <Link
             href="/"

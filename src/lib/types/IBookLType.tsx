@@ -4,6 +4,7 @@ export default interface IBooking {
   studioTitle: string;
   image?: string;
   price: number | string;
+  pricePerHour:number
   location: string;
   date: string; 
   userEmail: string;

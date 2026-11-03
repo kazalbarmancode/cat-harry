@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BookingForm from "@/components/BookingForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 interface Props {
   params: Promise<{
@@ -27,15 +29,14 @@ export default function StudioDetailsPage({ params }: Props) {
 
 async function StudioDetailsContent({ params }: Props) {
   const { id } = await params;
+  const session = await auth.api.getSession({ headers: await headers() });
+  const userEmail = session?.user?.email;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_BACKED_URL}/studioData/${id}`,
-    {
-      cache: "no-store",
-    },
-  );
+ const studioRes = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${id}`, {
+  cache: "no-store",
+});
 
-  if (!res.ok) {
+  if (!studioRes.ok) {
     return (
       <div className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Studio Not Found!</h1>
@@ -46,7 +47,23 @@ async function StudioDetailsContent({ params }: Props) {
     );
   }
 
-  const studio = await res.json();
+  const studio = await studioRes.json();
+  console.log('details page ',studio)
+
+  let hasBooked = false;
+  if (userEmail) {
+    try {
+      const bookingRes = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${userEmail}`, {
+        cache: "no-store",
+      });
+      const userBookings = await bookingRes.json();
+      if (Array.isArray(userBookings)) {
+        hasBooked = userBookings.some((b) => b.studioId === id);
+      }
+    } catch (error) {
+      console.error("Failed to check existing bookings:", error);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 py-10 px-4 md:px-8">
@@ -71,7 +88,7 @@ async function StudioDetailsContent({ params }: Props) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
           <div>
             <span className="text-xs uppercase font-bold tracking-widest px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              {studio?.category}
+              {studio?.category || "Studio"}
             </span>
             <h1 className="text-3xl md:text-5xl font-extrabold text-white mt-3 tracking-tight">
               {studio?.title}
@@ -89,7 +106,7 @@ async function StudioDetailsContent({ params }: Props) {
               </span>
               <span className="text-xs text-slate-400">/hr</span>
             </div>
-            <div className="h-8  bg-slate-800" />
+            <div className="h-8 bg-slate-800 w-px" />
             <div>
               <span className="text-xs text-slate-400 block">Rating</span>
               <span className="text-lg font-bold text-amber-400 flex items-center gap-1">
@@ -109,6 +126,7 @@ async function StudioDetailsContent({ params }: Props) {
                 }
                 alt={studio?.title || "Studio Image"}
                 fill
+                sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover"
                 priority
               />
@@ -170,7 +188,26 @@ async function StudioDetailsContent({ params }: Props) {
           </div>
 
           <div>
-            <BookingForm studio={studio} />
+            {hasBooked ? (
+              <div className="p-6 bg-slate-900 border border-slate-800 rounded-3xl text-center space-y-3 shadow-xl">
+                <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                  ✓
+                </div>
+                <h3 className="text-lg font-bold text-white">Already Booked</h3>
+                <p className="text-emerald-400 text-sm font-medium">
+                  You have already booked this studio.
+                </p>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Want to book again? Go to{" "}
+                  <Link href="/booking" className="text-blue-400 underline font-semibold">
+                    My Bookings
+                  </Link>{" "}
+                  and delete your existing booking.
+                </p>
+              </div>
+            ) : (
+              <BookingForm studio={studio} userEmail={userEmail} />
+            )}
           </div>
         </div>
       </div>
