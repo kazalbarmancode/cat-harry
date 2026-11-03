@@ -14,11 +14,12 @@ import {
 } from "@/components/ui/select";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { useSession } from "@/lib/auth-client";
+import {  useSession } from "@/lib/auth-client";
+import getTokenClient from "@/lib/getTokenClient";
 
 const categories = [
   "Photo Studio",
-  "Film Stage",
+  "Film Sound Stage",
   "Podcast Lounge",
   "Music Suite",
   "Workshop",
@@ -30,6 +31,9 @@ const availableAmenities = [
   "Lighting Gear",
   "Soundproofing",
   "Parking",
+  "Shure SM7B Mics",
+  "RodeCaster Pro II",
+  "4K Camcorder Setup",
 ];
 
 const AddStudioPage = () => {
@@ -42,11 +46,13 @@ const AddStudioPage = () => {
     title: "",
     category: "",
     location: "",
-    hourlyRate: "",
+    pricePerHour: "",
     securityDeposit: "",
-    maxCapacity: "",
-    overview: "",
+    capacity: "",
+    sqft: "",
+    description: "",
     image: "",
+    hostPhone: "",
     amenities: [] as string[],
   });
 
@@ -76,24 +82,52 @@ const AddStudioPage = () => {
     setLoading(true);
 
     const submissionData = {
-      ...form,
+      title: form.title,
+      category: form.category,
+      image: form.image,
+      pricePerHour: Number(form.pricePerHour),
+      rating: 4.8,
+      location: form.location,
+      sqft: Number(form.sqft),
+      capacity: Number(form.capacity),
+      description: form.description,
+      overview: form.description,
+      securityDeposit: form.securityDeposit,
+      amenities: form.amenities,
+      rules: [
+        "No smoking inside",
+        "No outside loud speakers",
+        "Food allowed in lounge area only",
+      ],
+      host: {
+        name: user.name || "Host",
+        phone: form.hostPhone || "+8801700000001",
+        email: user.email,
+      },
       ownerEmail: user.email,
       ownerName: user.name || "Host",
+      createdAt: new Date(),
     };
-
+    const token = await getTokenClient();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submissionData), 
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(submissionData),
+        },
+      );
 
       const data = await res.json();
 
       if (data.success || data.insertedId) {
         toast.success("Studio added successfully!");
         router.push("/listingPage");
-        router.refresh(); 
+        router.refresh();
       } else {
         toast.error(data.message || "Failed to add studio");
       }
@@ -107,11 +141,11 @@ const AddStudioPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
-      <Link href={'/studioPage'}>
+      <Link href={"/studioPage"}>
         <h1 className="text-2xl font-bold mb-6">Add New Studio</h1>
       </Link>
-      <Link href={'/listingPage'} className="my-3">
-        <Button className='bg-blue-600'>Back To My List</Button>
+      <Link href={"/listingPage"} className="my-3">
+        <Button className="bg-blue-600">Back To My List</Button>
       </Link>
       <form
         onSubmit={handleSubmit}
@@ -122,7 +156,7 @@ const AddStudioPage = () => {
             <Label htmlFor="title">Studio Title</Label>
             <Input
               id="title"
-              placeholder="e.g., Creative Loft Studio"
+              placeholder="e.g., Neon Wave Podcast Lounge"
               value={form.title}
               onChange={(event) => update("title", event.target.value)}
               required
@@ -157,7 +191,7 @@ const AddStudioPage = () => {
               <Label htmlFor="location">Location / Address</Label>
               <Input
                 id="location"
-                placeholder="e.g., Dhanmondi, Dhaka"
+                placeholder="e.g., Gulshan, Dhaka"
                 value={form.location}
                 onChange={(event) => update("location", event.target.value)}
                 required
@@ -167,17 +201,44 @@ const AddStudioPage = () => {
 
           <div className="grid gap-5 sm:grid-cols-3">
             <div className="grid gap-2">
-              <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+              <Label htmlFor="pricePerHour">Price Per Hour ($)</Label>
               <Input
-                id="hourlyRate"
+                id="pricePerHour"
                 type="number"
-                placeholder="50"
-                value={form.hourlyRate}
-                onChange={(event) => update("hourlyRate", event.target.value)}
+                placeholder="45"
+                value={form.pricePerHour}
+                onChange={(event) => update("pricePerHour", event.target.value)}
                 required
                 min="0"
               />
             </div>
+            <div className="grid gap-2">
+              <Label htmlFor="sqft">Square Feet (Sqft)</Label>
+              <Input
+                id="sqft"
+                type="number"
+                placeholder="450"
+                value={form.sqft}
+                onChange={(event) => update("sqft", event.target.value)}
+                required
+                min="0"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="capacity">Capacity (Persons)</Label>
+              <Input
+                id="capacity"
+                type="number"
+                placeholder="6"
+                value={form.capacity}
+                onChange={(event) => update("capacity", event.target.value)}
+                required
+                min="1"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor="securityDeposit">Security Deposit ($)</Label>
               <Input
@@ -192,15 +253,14 @@ const AddStudioPage = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="maxCapacity">Max Capacity</Label>
+              <Label htmlFor="hostPhone">Host Phone Number</Label>
               <Input
-                id="maxCapacity"
-                type="number"
-                placeholder="15"
-                value={form.maxCapacity}
-                onChange={(event) => update("maxCapacity", event.target.value)}
+                id="hostPhone"
+                type="text"
+                placeholder="+8801700000001"
+                value={form.hostPhone}
+                onChange={(event) => update("hostPhone", event.target.value)}
                 required
-                min="1"
               />
             </div>
           </div>
@@ -210,7 +270,7 @@ const AddStudioPage = () => {
             <Input
               id="image"
               type="url"
-              placeholder="https://example.com/studio.jpg"
+              placeholder="https://images.unsplash.com/..."
               value={form.image}
               onChange={(event) => update("image", event.target.value)}
               required
@@ -238,25 +298,24 @@ const AddStudioPage = () => {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="overview">Detailed Overview</Label>
+            <Label htmlFor="description">Detailed Description</Label>
             <Textarea
-              id="overview"
-              placeholder="Describe the studio features and equipment..."
+              id="description"
+              placeholder="Acoustically treated professional podcast booth..."
               className="min-h-36"
-              value={form.overview}
-              onChange={(event) => update("overview", event.target.value)}
+              value={form.description}
+              onChange={(event) => update("description", event.target.value)}
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              User Name 
+              User Name (Host)
             </label>
             <input
               type="text"
-              name="ownerName"
-              value={user?.name || "Loading..."} 
+              value={user?.name || "Loading..."}
               readOnly
               className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"
             />
@@ -264,11 +323,10 @@ const AddStudioPage = () => {
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              User Email 
+              User Email (Host)
             </label>
             <input
               type="email"
-              name="ownerEmail"
               value={user?.email || "Loading..."}
               readOnly
               className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"

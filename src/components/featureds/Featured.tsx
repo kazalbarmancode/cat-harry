@@ -3,8 +3,10 @@ import FeaturedsTypes from "@/lib/types/FeaturedTypes";
 import Link from "next/link";
 
 const Featured = async () => {
+ 
   const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData`, {
     cache: "no-store",
+   
   });
   const featureds: FeaturedsTypes[] = await res.json();
 

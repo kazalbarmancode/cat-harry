@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import IBooking from "@/lib/types/IBookLType";
 import MyBookingsList from "@/components/BookingList";
+import getTokenServar from "@/lib/getTokenServar";
 
 async function BookingsContent() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -18,6 +19,8 @@ async function BookingsContent() {
       </div>
     );
   }
+  const token = await getTokenServar()
+  console.log(token)
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${user.email}`, {
     cache: "no-store",

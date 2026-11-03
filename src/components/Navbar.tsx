@@ -23,6 +23,7 @@ import {
 } from "./ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavLinkItem {
   name: string;
@@ -47,7 +48,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0B0F19] text-white">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#0B0F19]/80 backdrop-blur-md text-slate-900 dark:text-white transition-colors duration-300">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <DropdownMenu>
@@ -99,10 +100,10 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-400 ${
+                className={`text-sm font-medium transition-colors hover:text-blue-500 ${
                   isActive
-                    ? "text-blue-400 font-semibold border-b-2 border-blue-500 pb-1"
-                    : "text-slate-300"
+                    ? "text-blue-500 font-semibold border-b-2 border-blue-500 pb-1"
+                    : "text-slate-600 dark:text-slate-300"
                 }`}
               >
                 {item.name}
@@ -112,8 +113,9 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           {user ? (
-            <Popover >
+            <Popover>
               <PopoverTrigger className="cursor-pointer focus:outline-none">
                 <Avatar className="ring-2 ring-blue-500/20 hover:ring-blue-500/50 transition-all">
                   <AvatarImage

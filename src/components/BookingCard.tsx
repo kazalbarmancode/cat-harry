@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin, DollarSign, Trash2, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
+import getTokenClient from "@/lib/getTokenClient";
 
 interface BookingCardProps {
   booking: IBooking;
@@ -38,35 +39,43 @@ const displayPrice = price || pricePerHour
         return "bg-slate-800 text-slate-300 border-slate-700";
     }
   };
-
-  const handleDeleteClick = async () => {
-    if (!_id) return;
-    if (!confirm("Are you sure you want to delete this booking?")) return;
+const handleDeleteBooking = async (id: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to cancel this booking?");
+    if (!confirmDelete) return;
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${_id}`,
-        {
-          method: "DELETE",
+      const token = await getTokenClient();
+      console.log("Fetched Token in BookingCard:", token); 
+
+      if (!token) {
+        toast.error("Session expired! Please log in again.");
+        return;
+      }
+
+      const res = await fetch(`http://localhost:5000/my-bookings/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
-      );
+      });
 
       const data = await res.json();
-      console.log("booking card", data);
-      if (res.ok || data.deletedCount > 0 || data.success) {
-        toast.success("Booking deleted successfully!");
+      console.log("1. booking card response:", data);
+
+      if (res.ok && data.success) {
         if (onDelete) {
-          onDelete(_id);
+          onDelete(id);
         }
+        toast.success("Booking cancelled successfully!");
       } else {
-        toast.error("Failed to delete booking");
+        toast.error(data.message || "Failed to cancel booking.");
       }
     } catch (error) {
-      console.error("Delete error:", error);
+      console.error("Delete booking error:", error);
       toast.error("Something went wrong!");
     }
   };
-
   return (
     <div className="group relative bg-gradient from-slate-900/90 via-slate-900/70 to-slate-950/90 border border-slate-800/80 hover:border-blue-500/40 rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 flex flex-col sm:flex-row justify-between items-stretch">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-5 sm:p-6 w-full">
@@ -127,8 +136,8 @@ const displayPrice = price || pricePerHour
 
         <div className="flex items-center gap-2.5">
           {_id && (
-            <button
-              onClick={handleDeleteClick}
+           <button
+              onClick={() => handleDeleteBooking(_id)} 
               className="px-3.5 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
               title="Delete Booking"
             >

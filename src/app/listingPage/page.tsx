@@ -7,6 +7,7 @@ import { MapPin, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
+import getTokenClient from "@/lib/getTokenClient";
 
 interface Studio {
   _id: string;
@@ -43,23 +44,36 @@ export default function MyListingsPage() {
 
   const handleDelete = async (id: string) => {
     try {
+      const token = await getTokenClient();
+      if (!token) {
+        toast.error("Token missing! Please log in again.");
+        return;
+      }
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${id}`,
-        { method: "DELETE" },
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        }
       );
+
       const data = await res.json();
-      if (data.deletedCount > 0 || res.ok) {
+
+      if (res.ok && (data.success || data.deletedCount > 0)) {
         setStudios((prev) => prev.filter((s) => s._id !== id));
         toast.success("Studio deleted successfully!");
       } else {
-        toast.error("Failed to delete studio.");
+        toast.error(data.message || "Failed to delete studio.");
       }
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong!");
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center text-slate-500">

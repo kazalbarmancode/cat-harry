@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import IStudioTypes from "@/lib/types/StudioTypes";
+import getTokenClient from "@/lib/getTokenClient";
 
 interface Props {
   studio: IStudioTypes;
@@ -41,15 +42,15 @@ const BookingForm = ({ studio, userEmail }: Props) => {
     };
 
     try {
-
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/booking`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bookingData),
-        },
-      );
+      const token = await getTokenClient();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/booking`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`, 
+      },
+      body: JSON.stringify(bookingData),
+    });
 
       const data = await res.json();
       if (res.ok && (data.success || data.acknowledged || data.insertedId)) {
@@ -90,9 +91,7 @@ const BookingForm = ({ studio, userEmail }: Props) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1 ">
-            Your Email
-          </label>
+          <label className="block text-sm font-medium mb-1 ">Your Email</label>
           <input
             type="email"
             name="email"

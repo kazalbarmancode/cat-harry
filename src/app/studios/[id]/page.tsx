@@ -1,9 +1,10 @@
-import React, { Suspense } from "react";
+import  { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BookingForm from "@/components/BookingForm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import getTokenServar from "@/lib/getTokenServar";
 
 interface Props {
   params: Promise<{
@@ -31,10 +32,17 @@ async function StudioDetailsContent({ params }: Props) {
   const { id } = await params;
   const session = await auth.api.getSession({ headers: await headers() });
   const userEmail = session?.user?.email;
+  const token = await getTokenServar();
 
- const studioRes = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${id}`, {
-  cache: "no-store",
-});
+  const studioRes = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${id}`,
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
 
   if (!studioRes.ok) {
     return (
@@ -48,14 +56,17 @@ async function StudioDetailsContent({ params }: Props) {
   }
 
   const studio = await studioRes.json();
-  console.log('details page ',studio)
+  console.log("details page ", studio);
 
   let hasBooked = false;
   if (userEmail) {
     try {
-      const bookingRes = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${userEmail}`, {
-        cache: "no-store",
-      });
+      const bookingRes = await fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${userEmail}`,
+        {
+          cache: "no-store",
+        },
+      );
       const userBookings = await bookingRes.json();
       if (Array.isArray(userBookings)) {
         hasBooked = userBookings.some((b) => b.studioId === id);
@@ -199,7 +210,10 @@ async function StudioDetailsContent({ params }: Props) {
                 </p>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Want to book again? Go to{" "}
-                  <Link href="/booking" className="text-blue-400 underline font-semibold">
+                  <Link
+                    href="/booking"
+                    className="text-blue-400 underline font-semibold"
+                  >
                     My Bookings
                   </Link>{" "}
                   and delete your existing booking.

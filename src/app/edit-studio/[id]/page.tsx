@@ -16,6 +16,7 @@ import {
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
+import getTokenClient from "@/lib/getTokenClient";
 
 const categories = [
   "Photo Studio",
@@ -59,7 +60,9 @@ function EditStudioFormContent() {
 
   useEffect(() => {
     if (studioId) {
-      fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`)
+      fetch(
+        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`,
+      )
         .then(async (res) => {
           const text = await res.text();
           return text ? JSON.parse(text) : null;
@@ -105,36 +108,32 @@ function EditStudioFormContent() {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
+ const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
+      const token = await getTokenClient(); 
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/studioData/${studioId}`, {
+        method: "PATCH", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, 
         },
-      );
+        body: JSON.stringify(form),
+      });
 
-      const textResponse = await res.text();
-      const result = textResponse ? JSON.parse(textResponse) : {};
+      const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data.success) {
         toast.success("Studio updated successfully!");
-        router.push("/listingPage");
+        router.push("/listingPage")
       } else {
-        toast.error(result.message || "Failed to update studio.");
+        toast.error(data.message || "Failed to update studio.");
       }
     } catch (error) {
-      console.error("Update Error:", error);
+      console.error("Update error:", error);
       toast.error("Something went wrong!");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -149,10 +148,14 @@ function EditStudioFormContent() {
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
       <Link href={"/listingPage"}>
-        <Button variant="outline" className="mb-4">← Back to My Listings</Button>
+        <Button variant="outline" className="mb-4">
+          ← Back to My Listings
+        </Button>
       </Link>
-      
-      <h1 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Edit Studio Listing</h1>
+
+      <h1 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">
+        Edit Studio Listing
+      </h1>
 
       <form
         onSubmit={handleSubmit}
@@ -218,7 +221,9 @@ function EditStudioFormContent() {
                 id="securityDeposit"
                 type="number"
                 value={form.securityDeposit}
-                onChange={(event) => update("securityDeposit", event.target.value)}
+                onChange={(event) =>
+                  update("securityDeposit", event.target.value)
+                }
                 min="0"
               />
             </div>
@@ -280,7 +285,7 @@ function EditStudioFormContent() {
           <div className="grid gap-5 sm:grid-cols-2 pt-2 border-t border-slate-100 dark:border-slate-800">
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-1">
-                Owner Name 
+                Owner Name
               </label>
               <input
                 type="text"
@@ -292,7 +297,7 @@ function EditStudioFormContent() {
 
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-1">
-                Owner Email 
+                Owner Email
               </label>
               <input
                 type="email"
