@@ -91,47 +91,55 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-lime-400">
+   <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-white py-12 px-4 transition-colors duration-300">
+      <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl w-full max-w-md transition-colors duration-300">
+        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
           Create an Account
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmitSignUp}>
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
+              Name
+            </label>
             <input
               type="text"
               name="name"
               required
-              className="w-full p-2.5 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-lime-400"
+              className="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
               placeholder="Your Name"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               required
-              className="w-full p-2.5 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-lime-400"
+              className="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
               placeholder="user@example.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Photo URL</label>
+            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
+              Photo URL
+            </label>
             <input
               type="url"
               name="image"
-              className="w-full p-2.5 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-lime-400"
+              className="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
               placeholder="https://example.com/photo.jpg"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
+            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -141,12 +149,12 @@ const SignUpPage = () => {
                   setPasswordError(validatePassword(e.target.value));
                 }
               }}
-              className={`w-full p-2.5 rounded bg-gray-700 border ${
-                passwordError ? "border-red-500" : "border-gray-600"
-              } focus:outline-none focus:border-lime-400`}
+              className={`w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border ${
+                passwordError ? "border-red-500" : "border-slate-200 dark:border-slate-700"
+              } text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors`}
               placeholder="••••••••"
             />
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Must contain 6+ characters, an uppercase and a lowercase letter.
             </p>
             {passwordError && (
@@ -159,7 +167,7 @@ const SignUpPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-lime-400 text-gray-900 font-semibold py-2.5 rounded hover:bg-lime-300 transition duration-200 disabled:opacity-50"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition duration-200 disabled:opacity-50 cursor-pointer shadow-sm shadow-blue-500/20"
           >
             {loading ? "Signing Up..." : "Sign Up"}
           </button>
@@ -170,7 +178,7 @@ const SignUpPage = () => {
             type="button"
             onClick={handleGoogleSignUp}
             disabled={loading || googleLoading}
-            className="w-full bg-white text-gray-800 font-medium py-2.5 rounded hover:bg-gray-100 transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-medium py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm cursor-pointer"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -196,9 +204,9 @@ const SignUpPage = () => {
           </button>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-400">
+        <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           Already have an account?{" "}
-          <Link href="/signIn" className="text-lime-400 hover:underline">
+          <Link href="/signIn" className="text-blue-600 dark:text-blue-400 hover:underline font-semibold">
             Sign In
           </Link>
         </p>

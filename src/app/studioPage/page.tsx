@@ -140,20 +140,26 @@ const AddStudioPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
+    <div className="max-w-3xl mx-auto py-10 px-4 transition-colors duration-300">
       <Link href={"/studioPage"}>
-        <h1 className="text-2xl font-bold mb-6">Add New Studio</h1>
+        <h1 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">
+          Add New Studio
+        </h1>
       </Link>
-      <Link href={"/listingPage"} className="my-3">
-        <Button className="bg-blue-600">Back To My List</Button>
+      <Link href={"/listingPage"} className="my-3 inline-block">
+        <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white">
+          Back To My List
+        </Button>
       </Link>
       <form
         onSubmit={handleSubmit}
-        className="rounded-sm border border-border my-3 bg-white p-8 shadow-sm"
+        className="rounded-xl border border-slate-200 dark:border-slate-800 my-3 bg-white dark:bg-slate-900 p-8 shadow-sm transition-colors duration-300"
       >
         <div className="grid gap-5">
           <div className="grid gap-2">
-            <Label htmlFor="title">Studio Title</Label>
+            <Label htmlFor="title" className="text-slate-700 dark:text-slate-300">
+              Studio Title
+            </Label>
             <Input
               id="title"
               placeholder="e.g., Neon Wave Podcast Lounge"
@@ -165,7 +171,7 @@ const AddStudioPage = () => {
 
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="grid gap-2">
-              <Label>Category</Label>
+              <Label className="text-slate-700 dark:text-slate-300">Category</Label>
               <Select
                 value={form.category}
                 onValueChange={(value: string | null) => {
@@ -188,7 +194,9 @@ const AddStudioPage = () => {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="location">Location / Address</Label>
+              <Label htmlFor="location" className="text-slate-700 dark:text-slate-300">
+                Location / Address
+              </Label>
               <Input
                 id="location"
                 placeholder="e.g., Gulshan, Dhaka"
@@ -201,7 +209,9 @@ const AddStudioPage = () => {
 
           <div className="grid gap-5 sm:grid-cols-3">
             <div className="grid gap-2">
-              <Label htmlFor="pricePerHour">Price Per Hour ($)</Label>
+              <Label htmlFor="pricePerHour" className="text-slate-700 dark:text-slate-300">
+                Price Per Hour ($)
+              </Label>
               <Input
                 id="pricePerHour"
                 type="number"
@@ -213,7 +223,9 @@ const AddStudioPage = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="sqft">Square Feet (Sqft)</Label>
+              <Label htmlFor="sqft" className="text-slate-700 dark:text-slate-300">
+                Square Feet (Sqft)
+              </Label>
               <Input
                 id="sqft"
                 type="number"
@@ -225,7 +237,9 @@ const AddStudioPage = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="capacity">Capacity (Persons)</Label>
+              <Label htmlFor="capacity" className="text-slate-700 dark:text-slate-300">
+                Capacity (Persons)
+              </Label>
               <Input
                 id="capacity"
                 type="number"
@@ -240,7 +254,9 @@ const AddStudioPage = () => {
 
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="grid gap-2">
-              <Label htmlFor="securityDeposit">Security Deposit ($)</Label>
+              <Label htmlFor="securityDeposit" className="text-slate-700 dark:text-slate-300">
+                Security Deposit ($)
+              </Label>
               <Input
                 id="securityDeposit"
                 type="number"
@@ -253,7 +269,9 @@ const AddStudioPage = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="hostPhone">Host Phone Number</Label>
+              <Label htmlFor="hostPhone" className="text-slate-700 dark:text-slate-300">
+                Host Phone Number
+              </Label>
               <Input
                 id="hostPhone"
                 type="text"
@@ -266,7 +284,9 @@ const AddStudioPage = () => {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="image">Image URL</Label>
+            <Label htmlFor="image" className="text-slate-700 dark:text-slate-300">
+              Image URL
+            </Label>
             <Input
               id="image"
               type="url"
@@ -278,18 +298,18 @@ const AddStudioPage = () => {
           </div>
 
           <div className="grid gap-2">
-            <Label>Amenities</Label>
+            <Label className="text-slate-700 dark:text-slate-300">Amenities</Label>
             <div className="flex flex-wrap gap-4 pt-1">
               {availableAmenities.map((amenity) => (
                 <label
                   key={amenity}
-                  className="flex items-center gap-2 cursor-pointer text-sm"
+                  className="flex items-center gap-2 cursor-pointer text-sm text-slate-700 dark:text-slate-300"
                 >
                   <input
                     type="checkbox"
                     checked={form.amenities.includes(amenity)}
                     onChange={() => handleAmenityToggle(amenity)}
-                    className="rounded border-gray-300"
+                    className="rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"
                   />
                   {amenity}
                 </label>
@@ -298,7 +318,9 @@ const AddStudioPage = () => {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="description">Detailed Description</Label>
+            <Label htmlFor="description" className="text-slate-700 dark:text-slate-300">
+              Detailed Description
+            </Label>
             <Textarea
               id="description"
               placeholder="Acoustically treated professional podcast booth..."
@@ -310,33 +332,33 @@ const AddStudioPage = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               User Name (Host)
             </label>
             <input
               type="text"
               value={user?.name || "Loading..."}
               readOnly
-              className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"
+              className="w-full bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-700 dark:text-slate-300 cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               User Email (Host)
             </label>
             <input
               type="email"
               value={user?.email || "Loading..."}
               readOnly
-              className="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-700 cursor-not-allowed"
+              className="w-full bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-700 dark:text-slate-300 cursor-not-allowed"
             />
           </div>
 
           <Button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg transition-colors"
           >
             {loading ? "Submitting..." : "Submit Listing"}
           </Button>

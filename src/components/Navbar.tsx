@@ -53,21 +53,23 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger
-              className={`md:hidden text-white ${buttonVariants({
-                variant: "ghost",
-                size: "icon",
-              })}`}
+              className={`md:hidden text-slate-800 dark:text-white ${buttonVariants(
+                {
+                  variant: "ghost",
+                  size: "icon",
+                },
+              )}`}
             >
               <Menu className="h-5 w-5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="start"
-              className="w-48 mt-2 bg-slate-900 border-slate-800 text-white shadow-xl"
+              className="w-48 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-xl rounded-xl"
             >
               {navItems.map((item) => (
                 <DropdownMenuItem
                   key={item.href}
-                  className="focus:bg-slate-800 focus:text-white cursor-pointer"
+                  className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-slate-900 dark:focus:text-white cursor-pointer"
                 >
                   <Link href={item.href} className="w-full">
                     {item.name}
@@ -78,7 +80,7 @@ const Navbar = () => {
           </DropdownMenu>
 
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden bg-slate-900 border border-slate-800">
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
               <Image
                 src={LoGo}
                 alt="StudioSpace Logo"
@@ -87,7 +89,7 @@ const Navbar = () => {
                 className="object-cover"
               />
             </div>
-            <span className="text-lg font-bold tracking-tight text-white">
+            <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
               Studio<span className="text-blue-500">Space</span>
             </span>
           </Link>
@@ -123,40 +125,40 @@ const Navbar = () => {
                     src={user?.image || ""}
                     alt={user?.name || "User"}
                   />
-                  <AvatarFallback className="bg-slate-800 text-white font-medium">
+                  <AvatarFallback className="bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white font-medium">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </AvatarFallback>
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent
                 align="end"
-                className="w-60 bg-slate-900 border-slate-800 text-white p-4 shadow-2xl rounded-2xl"
+                className="w-60 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-4 shadow-2xl rounded-2xl"
               >
                 <PopoverHeader className="space-y-1 text-left">
-                  <PopoverTitle className="text-sm font-semibold text-white">
+                  <PopoverTitle className="text-sm font-semibold text-slate-900 dark:text-white">
                     {user?.name}
                   </PopoverTitle>
-                  <PopoverDescription className="text-xs text-slate-400 truncate">
+                  <PopoverDescription className="text-xs text-slate-500 dark:text-slate-400 truncate">
                     {user?.email}
                   </PopoverDescription>
                 </PopoverHeader>
 
-                <div className="mt-3 pt-3 border-t border-slate-800/80 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-1">
                   <Link
                     href="/booking"
-                    className="flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 p-2 rounded-xl transition-colors"
+                    className="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 p-2 rounded-xl transition-colors"
                   >
-                    <CalendarDays className="w-4 h-4 text-blue-400" />
+                    <CalendarDays className="w-4 h-4 text-blue-500 dark:text-blue-400" />
                     <span>My Bookings</span>
                   </Link>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/80">
+                <div className="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800/80">
                   <Button
                     onClick={handleSignout}
                     variant="destructive"
                     size="sm"
-                    className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold rounded-xl transition-all cursor-pointer"
+                    className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 text-xs font-semibold rounded-xl transition-all cursor-pointer"
                   >
                     Sign Out
                   </Button>
@@ -167,7 +169,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <Link
                 href="/signIn"
-                className="text-sm text-slate-300 transition-colors hover:text-blue-400"
+                className="text-sm text-slate-600 dark:text-slate-300 transition-colors hover:text-blue-500 dark:hover:text-blue-400"
               >
                 Login
               </Link>
@@ -176,7 +178,7 @@ const Navbar = () => {
                 className={`text-sm ${buttonVariants({
                   variant: "default",
                   size: "sm",
-                })} bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl`}
+                })} bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-medium rounded-xl transition-all shadow-sm shadow-blue-500/20`}
               >
                 Sign Up
               </Link>

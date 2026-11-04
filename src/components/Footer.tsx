@@ -11,12 +11,13 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0B0F19] text-slate-300 border-t border-slate-800">
+   <footer className="bg-slate-50 dark:bg-[#0B0F19] text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden bg-slate-900 border border-slate-800">
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <Image
                   src={LoGo}
                   alt="StudioSpace Logo"
@@ -25,11 +26,11 @@ const Footer = () => {
                   className="object-cover"
                 />
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">
+              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
                 Studio<span className="text-blue-500">Space</span>
               </span>
             </Link>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Reserve world-class studios for your next creative production,
               film shoot, podcast, or photography session.
             </p>
@@ -39,7 +40,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500/50 transition-all"
+                className="h-9 w-9 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-500 hover:border-blue-500/50 transition-all shadow-sm"
               >
                 <FaSquareFacebook className="h-5 w-5" />
               </a>
@@ -49,7 +50,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-pink-500 hover:border-pink-500/50 transition-all"
+                className="h-9 w-9 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-pink-500 hover:border-pink-500/50 transition-all shadow-sm"
               >
                 <FaSquareInstagram className="h-5 w-5" />
               </a>
@@ -59,7 +60,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X (Twitter)"
-                className="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 transition-all"
+                className="h-9 w-9 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 dark:hover:border-slate-600 transition-all shadow-sm"
               >
                 <FaXTwitter className="h-4 w-4" />
               </a>
@@ -69,7 +70,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500/50 transition-all"
+                className="h-9 w-9 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-red-500 hover:border-red-500/50 transition-all shadow-sm"
               >
                 <FaYoutube className="h-5 w-5" />
               </a>
@@ -77,14 +78,14 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-semibold text-base mb-4">
+            <h3 className="text-slate-900 dark:text-white font-semibold text-base mb-4">
               Quick Links
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Home
                 </Link>
@@ -92,7 +93,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/studios"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Explore Studios
                 </Link>
@@ -100,7 +101,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/how-it-work"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   How It Works
                 </Link>
@@ -108,7 +109,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/about-page"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   About Us
                 </Link>
@@ -117,14 +118,14 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-semibold text-base mb-4">
+            <h3 className="text-slate-900 dark:text-white font-semibold text-base mb-4">
               Categories
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/studios?category=film"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Film Sound Stage
                 </Link>
@@ -132,7 +133,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/studios?category=podcast"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Podcast Lounge
                 </Link>
@@ -140,7 +141,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/studios?category=photo"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Photography Cyc Wall
                 </Link>
@@ -148,7 +149,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/studios?category=music"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                 >
                   Soundproof Music Suite
                 </Link>
@@ -156,11 +157,12 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Contact Us */}
           <div>
-            <h3 className="text-white font-semibold text-base mb-4">
+            <h3 className="text-slate-900 dark:text-white font-semibold text-base mb-4">
               Contact Us
             </h3>
-            <ul className="space-y-3 text-sm text-slate-400">
+            <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-blue-500 mt-1 shrink-0" />
                 <span>123 Creative Studio Ave, Suite 400, NY</span>
@@ -175,25 +177,27 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
         </div>
 
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-500">
           <p>©2026 StudioSpace. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link
               href="/privacyPolicyPage"
-              className="hover:text-slate-400 transition-colors"
+              className="hover:text-slate-800 dark:hover:text-slate-400 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="hover:text-slate-400 transition-colors"
+              className="hover:text-slate-800 dark:hover:text-slate-400 transition-colors"
             >
               Terms of Service
             </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );

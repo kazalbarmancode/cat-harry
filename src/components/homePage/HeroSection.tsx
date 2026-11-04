@@ -45,10 +45,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative bg-[#0B0F19] py-8 sm:py-12 overflow-hidden">
+   <section className="relative bg-white dark:bg-[#0B0F19] py-8 sm:py-12 overflow-hidden transition-colors duration-300">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="relative w-full h-100 sm:h-120 lg:h-130 rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
+        <div className="relative w-full h-100 sm:h-120 lg:h-130 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
           
           {slides.map((slide, index) => (
             <div
@@ -64,7 +64,7 @@ const HeroSection = () => {
                 height={300}
                 className="w-full h-full object-cover brightness-[0.45]"
               />
-              <div className="absolute inset-0 bg-gradient from-[#0B0F19]/80 via-transparent to-black/30" />
+              <div className="absolute inset-0 bg-linear-to-b from-[#0B0F19]/80 via-transparent to-black/40" />
             </div>
           ))}
 
@@ -78,14 +78,14 @@ const HeroSection = () => {
               
               <Link
                 href="/studios"
-                className="px-6 sm:px-8 py-3 rounded-xl bg-gradient-to from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium text-sm sm:text-base shadow-lg shadow-blue-600/30 transition-all transform hover:scale-105"
+                className="px-6 sm:px-8 py-3 rounded-xl bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium text-sm sm:text-base shadow-lg shadow-blue-600/30 transition-all transform hover:scale-105"
               >
                 Explore Studios
               </Link>
 
               <Link
                 href="/host"
-                className="px-6 sm:px-8 py-3 rounded-xl bg-slate-950/40 hover:bg-slate-900/60 border border-blue-400/50 text-white font-medium text-sm sm:text-base backdrop-blur-md shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all transform hover:scale-105"
+                className="px-6 sm:px-8 py-3 rounded-xl bg-slate-900/60 dark:bg-slate-950/40 hover:bg-slate-800/80 dark:hover:bg-slate-900/60 border border-blue-400/60 text-white font-medium text-sm sm:text-base backdrop-blur-md shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all transform hover:scale-105"
               >
                 Host Your Space
               </Link>
@@ -96,7 +96,7 @@ const HeroSection = () => {
 
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/60 border border-slate-700 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-900/70 dark:bg-slate-950/60 border border-slate-600 dark:border-slate-700 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
             aria-label="Previous Slide"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -104,7 +104,7 @@ const HeroSection = () => {
 
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/60 border border-slate-700 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-900/70 dark:bg-slate-950/60 border border-slate-600 dark:border-slate-700 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
             aria-label="Next Slide"
           >
             <ChevronRight className="h-5 w-5" />

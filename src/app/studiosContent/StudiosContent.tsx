@@ -25,24 +25,24 @@ const StudiosContent = async ({ searchParams }: Props) => {
   const studios: FeaturedsTypes[] = await res.json();
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white py-14 px-4 md:px-8">
+   <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-white py-14 px-4 md:px-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <span className="text-blue-400 font-semibold text-xs tracking-widest uppercase bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
+          <span className="text-blue-600 dark:text-blue-400 font-semibold text-xs tracking-widest uppercase bg-blue-50 dark:bg-blue-500/10 px-4 py-1.5 rounded-full border border-blue-500/20">
             Creative Marketplace
           </span>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-              Explore All Studios
-            </h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Explore All Studios
+          </h1>
 
-          <p className="text-slate-400 text-sm md:text-base">
+          <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base">
             Discover and book verified professional photo studios, sound stages,
             and production suites.
           </p>
         </div>
 
         <div className="space-y-3">
-          <h3 className="text-[11px] uppercase tracking-widest font-bold text-slate-400/80 px-1">
+          <h3 className="text-[11px] uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400/80 px-1">
             Filter by Category
           </h3>
 
@@ -51,8 +51,8 @@ const StudiosContent = async ({ searchParams }: Props) => {
               href="/studios"
               className={`group relative px-4 py-2 rounded-xl border text-xs font-semibold transition-all duration-300 flex items-center gap-2 backdrop-blur-md ${
                 !selectedCategory
-                  ? "bg-gradient from-blue-600 to-indigo-600 border-blue-400/50 text-white shadow-lg shadow-blue-500/25 ring-1 ring-blue-400/30"
-                  : "bg-slate-900/50 border-slate-800/80 text-slate-300 hover:text-white hover:border-slate-700 hover:bg-slate-800/60"
+                  ? "bg-linear-to-r from-blue-600 to-indigo-600 border-blue-400/50 text-white shadow-lg shadow-blue-500/25 ring-1 ring-blue-400/30"
+                  : "bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800/60 shadow-sm"
               }`}
             >
               <span className="text-sm">✨</span>
@@ -75,8 +75,8 @@ const StudiosContent = async ({ searchParams }: Props) => {
                     href={`/studios?category=${encodeURIComponent(queryValue)}`}
                     className={`group relative px-4 py-2 rounded-xl border text-xs font-semibold transition-all duration-300 flex items-center gap-2 backdrop-blur-md ${
                       isSelected
-                        ? "bg-gradient from-blue-600 to-indigo-600 border-blue-400/50 text-white shadow-lg shadow-blue-500/25 ring-1 ring-blue-400/30 scale-[1.02]"
-                        : "bg-slate-900/50 border-slate-800/80 text-slate-300 hover:text-white hover:border-slate-700 hover:bg-slate-800/60"
+                        ? "bg-linear-to-r from-blue-600 to-indigo-600 border-blue-400/50 text-white shadow-lg shadow-blue-500/25 ring-1 ring-blue-400/30 scale-[1.02]"
+                        : "bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800/60 shadow-sm"
                     }`}
                   >
                     <span className="text-sm opacity-90 group-hover:scale-110 transition-transform duration-200">
@@ -89,19 +89,19 @@ const StudiosContent = async ({ searchParams }: Props) => {
           </div>
         </div>
 
-        <div className="space-y-6 pt-4 border-t border-slate-800/80">
+        <div className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-800/80">
           
           {!studios || studios.length === 0 ? (
-            <div className="text-center py-24 bg-slate-900/40 border border-slate-800 rounded-3xl">
-              <h3 className="text-xl font-bold text-slate-300">
+            <div className="text-center py-24 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-slate-300">
                 No studios found for this category.
               </h3>
-              <p className="text-sm text-slate-500 mt-2">
+              <p className="text-sm text-slate-600 dark:text-slate-500 mt-2">
                 Try selecting another category or reset filters.
               </p>
               <Link
                 href="/studios"
-                className="inline-block mt-6 px-6 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-lg"
+                className="inline-block mt-6 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"
               >
                 Reset Filters
               </Link>

@@ -18,9 +18,9 @@ const AllCard = ({ feat }: AllCardProps) => {
   } = feat;
 
   return (
-    <div className="group bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-950/20 flex flex-col justify-between">
+   <div className="group bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-950/10 dark:hover:shadow-blue-950/20 flex flex-col justify-between shadow-sm">
       <div>
-        <div className="relative h-56 w-full overflow-hidden">
+        <div className="relative h-56 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
           <Image
             src={feat.image}
             alt={feat.title}
@@ -28,35 +28,35 @@ const AllCard = ({ feat }: AllCardProps) => {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
           />
-          <span className="absolute top-4 left-4 bg-blue-600/95 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">
+          <span className="absolute top-4 left-4 bg-blue-600/95 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30 shadow-sm">
             {category}
           </span>
 
-          <div className="absolute top-4 right-4 bg-slate-950/75 backdrop-blur-md text-amber-400 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-700 flex items-center gap-1">
+          <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-950/75 backdrop-blur-md text-amber-500 dark:text-amber-400 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-700 flex items-center gap-1 shadow-sm">
             ⭐ <span>{rating || 4.9}</span>
           </div>
         </div>
 
         <div className="p-5 space-y-3">
-          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
             {title}
           </h3>
-          <p className="text-sm text-slate-400 flex items-center gap-1">
+          <p className="text-sm text-slate-600 dark:text-slate-400 flex items-center gap-1">
             <span>📍</span> {location}
           </p>
-          <p className="text-sm text-slate-300 line-clamp-2">{description}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{description}</p>
         </div>
       </div>
 
-      <div className="p-5 pt-0 flex items-center justify-between mt-4 border-t border-slate-800">
+      <div className="p-5 pt-0 flex items-center justify-between mt-4 border-t border-slate-200 dark:border-slate-800">
         <div>
-          <span className="text-2xl font-bold text-white">${pricePerHour}</span>
-          <span className="text-xs text-slate-400"> / hr</span>
+          <span className="text-2xl font-bold text-slate-900 dark:text-white">${pricePerHour}</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400"> / hr</span>
         </div>
 
         <Link
           href={`/studios/${_id}`}
-          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/20 active:scale-95 cursor-pointer"
         >
           View Details
         </Link>

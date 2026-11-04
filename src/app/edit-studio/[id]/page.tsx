@@ -137,186 +137,205 @@ function EditStudioFormContent() {
     }
   };
 
-  if (fetching) {
+ if (fetching) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center text-slate-500">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0B0F19] text-slate-600 dark:text-slate-400 font-medium transition-colors duration-300">
         Loading studio data for editing...
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
-      <Link href={"/listingPage"}>
-        <Button variant="outline" className="mb-4">
-          ← Back to My Listings
-        </Button>
-      </Link>
-
-      <h1 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">
-        Edit Studio Listing
-      </h1>
-
-      <form
-        onSubmit={handleSubmit}
-        className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm"
-      >
-        <div className="grid gap-5">
-          <div className="grid gap-2">
-            <Label htmlFor="title">Studio Title</Label>
-            <Input
-              id="title"
-              value={form.title}
-              onChange={(event) => update("title", event.target.value)}
-              required
-            />
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="grid gap-2">
-              <Label>Category</Label>
-              <Select
-                value={form.category || ""}
-                onValueChange={(value) => update("category", value || "")}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="location">Location / Address</Label>
-              <Input
-                id="location"
-                value={form.location}
-                onChange={(event) => update("location", event.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-3">
-            <div className="grid gap-2">
-              <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
-              <Input
-                id="hourlyRate"
-                type="number"
-                value={form.hourlyRate}
-                onChange={(event) => update("hourlyRate", event.target.value)}
-                required
-                min="0"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="securityDeposit">Security Deposit ($)</Label>
-              <Input
-                id="securityDeposit"
-                type="number"
-                value={form.securityDeposit}
-                onChange={(event) =>
-                  update("securityDeposit", event.target.value)
-                }
-                min="0"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="maxCapacity">Max Capacity</Label>
-              <Input
-                id="maxCapacity"
-                type="number"
-                value={form.maxCapacity}
-                onChange={(event) => update("maxCapacity", event.target.value)}
-                required
-                min="1"
-              />
-            </div>
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="image">Image URL</Label>
-            <Input
-              id="image"
-              type="url"
-              value={form.image}
-              onChange={(event) => update("image", event.target.value)}
-              required
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label>Amenities</Label>
-            <div className="flex flex-wrap gap-4 pt-1">
-              {availableAmenities.map((amenity) => (
-                <label
-                  key={amenity}
-                  className="flex items-center gap-2 cursor-pointer text-sm text-slate-700 dark:text-slate-300"
-                >
-                  <input
-                    type="checkbox"
-                    checked={form.amenities.includes(amenity)}
-                    onChange={() => handleAmenityToggle(amenity)}
-                    className="rounded border-gray-300"
-                  />
-                  {amenity}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="overview">Detailed Overview</Label>
-            <Textarea
-              id="overview"
-              className="min-h-36"
-              value={form.overview}
-              onChange={(event) => update("overview", event.target.value)}
-              required
-            />
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <div>
-              <label className="block text-sm font-medium text-slate-500 mb-1">
-                Owner Name
-              </label>
-              <input
-                type="text"
-                value={form.ownerName}
-                readOnly
-                className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 cursor-not-allowed text-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-500 mb-1">
-                Owner Email
-              </label>
-              <input
-                type="email"
-                value={form.ownerEmail}
-                readOnly
-                className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 cursor-not-allowed text-sm"
-              />
-            </div>
-          </div>
-
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] transition-colors duration-300">
+      <div className="max-w-3xl mx-auto py-10 px-4">
+        <Link href={"/listingPage"}>
           <Button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-colors mt-4"
+            variant="outline"
+            className="mb-4 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
-            {loading ? "Updating..." : "Update Listing"}
+            ← Back to My Listings
           </Button>
-        </div>
-      </form>
+        </Link>
+
+        <h1 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">
+          Edit Studio Listing
+        </h1>
+
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm transition-colors duration-300"
+        >
+          <div className="grid gap-5">
+            <div className="grid gap-2">
+              <Label htmlFor="title" className="text-slate-700 dark:text-slate-300">
+                Studio Title
+              </Label>
+              <Input
+                id="title"
+                value={form.title}
+                onChange={(event) => update("title", event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-2">
+                <Label className="text-slate-700 dark:text-slate-300">Category</Label>
+                <Select
+                  value={form.category || ""}
+                  onValueChange={(value) => update("category", value || "")}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="location" className="text-slate-700 dark:text-slate-300">
+                  Location / Address
+                </Label>
+                <Input
+                  id="location"
+                  value={form.location}
+                  onChange={(event) => update("location", event.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-3">
+              <div className="grid gap-2">
+                <Label htmlFor="hourlyRate" className="text-slate-700 dark:text-slate-300">
+                  Hourly Rate ($)
+                </Label>
+                <Input
+                  id="hourlyRate"
+                  type="number"
+                  value={form.hourlyRate}
+                  onChange={(event) => update("hourlyRate", event.target.value)}
+                  required
+                  min="0"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="securityDeposit" className="text-slate-700 dark:text-slate-300">
+                  Security Deposit ($)
+                </Label>
+                <Input
+                  id="securityDeposit"
+                  type="number"
+                  value={form.securityDeposit}
+                  onChange={(event) =>
+                    update("securityDeposit", event.target.value)
+                  }
+                  min="0"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="maxCapacity" className="text-slate-700 dark:text-slate-300">
+                  Max Capacity
+                </Label>
+                <Input
+                  id="maxCapacity"
+                  type="number"
+                  value={form.maxCapacity}
+                  onChange={(event) => update("maxCapacity", event.target.value)}
+                  required
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="image" className="text-slate-700 dark:text-slate-300">
+                Image URL
+              </Label>
+              <Input
+                id="image"
+                type="url"
+                value={form.image}
+                onChange={(event) => update("image", event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label className="text-slate-700 dark:text-slate-300">Amenities</Label>
+              <div className="flex flex-wrap gap-4 pt-1">
+                {availableAmenities.map((amenity) => (
+                  <label
+                    key={amenity}
+                    className="flex items-center gap-2 cursor-pointer text-sm text-slate-700 dark:text-slate-300"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={form.amenities.includes(amenity)}
+                      onChange={() => handleAmenityToggle(amenity)}
+                      className="rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"
+                    />
+                    {amenity}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="overview" className="text-slate-700 dark:text-slate-300">
+                Detailed Overview
+              </Label>
+              <Textarea
+                id="overview"
+                className="min-h-36"
+                value={form.overview}
+                onChange={(event) => update("overview", event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 pt-4 border-t border-slate-200 dark:border-slate-800">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                  Owner Name
+                </label>
+                <input
+                  type="text"
+                  value={form.ownerName}
+                  readOnly
+                  className="w-full bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-700 dark:text-slate-300 cursor-not-allowed text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                  Owner Email
+                </label>
+                <input
+                  type="email"
+                  value={form.ownerEmail}
+                  readOnly
+                  className="w-full bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-700 dark:text-slate-300 cursor-not-allowed text-sm"
+                />
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-colors mt-4 cursor-pointer shadow-sm"
+            >
+              {loading ? "Updating..." : "Update Listing"}
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
@@ -325,7 +344,7 @@ export default function EditStudioPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-[60vh] flex items-center justify-center text-slate-500">
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0B0F19] text-slate-600 dark:text-slate-400 font-medium transition-colors duration-300">
           Loading editor...
         </div>
       }
@@ -334,3 +353,4 @@ export default function EditStudioPage() {
     </Suspense>
   );
 }
+

@@ -13,8 +13,10 @@ export default function MyBookingsList({ initialBookings }: { initialBookings: I
 
   if (bookings.length === 0) {
     return (
-      <div className="text-center py-12 border border-slate-800 rounded-2xl bg-slate-900/40">
-        <p className="text-slate-800 text-sm">No bookings found for your account.</p>
+      <div className="text-center py-12 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900/40 shadow-sm transition-colors duration-300">
+        <p className="text-slate-600 dark:text-slate-400 text-sm">
+          No bookings found for your account.
+        </p>
       </div>
     );
   }

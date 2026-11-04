@@ -77,9 +77,9 @@ const handleDeleteBooking = async (id: string) => {
     }
   };
   return (
-    <div className="group relative bg-gradient from-slate-900/90 via-slate-900/70 to-slate-950/90 border border-slate-800/80 hover:border-blue-500/40 rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 flex flex-col sm:flex-row justify-between items-stretch">
+    <div className="group relative bg-white dark:bg-linear-to-br dark:from-slate-900/90 dark:via-slate-900/70 dark:to-slate-950/90 border border-slate-200 dark:border-slate-800/80 hover:border-blue-500/40 rounded-3xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow-2xl hover:shadow-blue-500/5 flex flex-col sm:flex-row justify-between items-stretch">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-5 sm:p-6 w-full">
-        <div className="relative h-36 w-full sm:w-40 overflow-hidden rounded-2xl shrink-0 shadow-inner border border-slate-800">
+        <div className="relative h-36 w-full sm:w-40 overflow-hidden rounded-2xl shrink-0 shadow-inner border border-slate-200 dark:border-slate-800">
           <Image
             src={
               image ||
@@ -90,7 +90,7 @@ const handleDeleteBooking = async (id: string) => {
             sizes="(max-width: 768px) 100vw, 160px"
             className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
-          <div className="absolute inset-y-0 left-0 w-full bg-gradient from-black/40 via-transparent to-transparent opacity-60" />
+          <div className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/40 via-transparent to-transparent opacity-60" />
 
           <span
             className={`absolute top-2.5 left-2.5 backdrop-blur-md text-[11px] font-bold px-2.5 py-1 rounded-full border shadow-md ${getBadgeStyle(
@@ -102,48 +102,48 @@ const handleDeleteBooking = async (id: string) => {
         </div>
 
         <div className="space-y-2 flex-1">
-          <h3 className="text-xl font-bold  transition-colors ">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white transition-colors">
             {studioTitle || "Studio Title"}
           </h3>
 
-          <p className="text-sm text-slate-300 flex items-center gap-2">
-            <span className="p-1 rounded-lg bg-slate-800 text-blue-400">
+          <p className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+            <span className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400">
               <MapPin className="w-3.5 h-3.5" />
             </span>
             {location || "Location not available"}
           </p>
 
-          <p className="text-sm text-slate-300 flex items-center gap-2">
-            <span className="p-1 rounded-lg bg-slate-800 text-amber-400">
+          <p className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+            <span className="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-amber-500 dark:text-amber-400">
               <Calendar className="w-3.5 h-3.5" />
             </span>
             Date:{" "}
-            <strong className="text-white font-medium bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700">
+            <strong className="text-slate-900 dark:text-white font-medium bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
               {date}
             </strong>
           </p>
         </div>
       </div>
 
-      <div className="p-5 sm:p-6 sm:border-l border-t sm:border-t-0 border-slate-800/80 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 bg-slate-950/30 shrink-0">
+      <div className="p-5 sm:p-6 sm:border-l border-t sm:border-t-0 border-slate-200 dark:border-slate-800/80 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 bg-slate-50 dark:bg-slate-950/30 shrink-0">
         <div className="text-left sm:text-right">
-          <div className="flex items-center sm:justify-end text-2xl font-black text-black tracking-tight">
+          <div className="flex items-center sm:justify-end text-2xl font-black text-slate-900 dark:text-white tracking-tight">
             <DollarSign className="w-5 h-5 text-emerald-500 inline -mr-1" />
             {displayPrice}
-            <span className="text-xs font-normal text-red-600 ml-1">/hr</span>
+            <span className="text-xs font-normal text-red-500 dark:text-red-600 ml-1">/hr</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2.5">
           {_id && (
            <button
-              onClick={() => handleDeleteBooking(_id)} 
-              className="px-3.5 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
-              title="Delete Booking"
-            >
-              <Trash2 className="w-4 h-4" />
-              <span className="hidden xs:inline">Remove</span>
-            </button>
+             onClick={() => handleDeleteBooking(_id)} 
+             className="px-3.5 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 hover:border-red-500/40 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
+             title="Delete Booking"
+           >
+             <Trash2 className="w-4 h-4" />
+             <span className="hidden xs:inline">Remove</span>
+           </button>
           )}
 
           {studioId && (

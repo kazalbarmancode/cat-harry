@@ -69,14 +69,15 @@ const BookingForm = ({ studio, userEmail }: Props) => {
   };
 
   return (
-    <div className="dark:bg-slate-900 border dark:border-slate-800 p-6 rounded-2xl shadow-sm h-fit">
-      <h3 className="text-xl font-semibold mb-4 text-white">
+   <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm h-fit transition-colors duration-300">
+      <h3 className="text-xl font-semibold mb-4 text-slate-900 dark:text-white">
         Book This Studio
       </h3>
 
       <form onSubmit={handleBookingSubmit} className="space-y-4">
+        {/* Your Name */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-slate-300">
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
             Your Name
           </label>
           <input
@@ -85,25 +86,29 @@ const BookingForm = ({ studio, userEmail }: Props) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
-            className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+            className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
             required
           />
         </div>
 
+        {/* Your Email (Disabled) */}
         <div>
-          <label className="block text-sm font-medium mb-1 ">Your Email</label>
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
+            Your Email
+          </label>
           <input
             type="email"
             name="email"
             value={email}
             disabled
-            className="w-full px-3 py-2 border rounded-lg dark:bg-slate-300 dark:border-slate-300 text-slate-200 text-sm "
+            className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-lg text-slate-500 dark:text-slate-400 text-sm cursor-not-allowed"
             required
           />
         </div>
 
+        {/* Select Booking Date */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-slate-300">
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
             Select Booking Date
           </label>
           <input
@@ -111,7 +116,7 @@ const BookingForm = ({ studio, userEmail }: Props) => {
             name="date"
             value={bookingDate}
             onChange={(e) => setBookingDate(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+            className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
             required
           />
         </div>
@@ -119,7 +124,7 @@ const BookingForm = ({ studio, userEmail }: Props) => {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg transition-colors text-sm font-semibold cursor-pointer"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg transition-colors text-sm font-semibold cursor-pointer shadow-lg shadow-blue-600/20 active:scale-95"
         >
           {loading ? "Processing..." : "Confirm Booking"}
         </Button>

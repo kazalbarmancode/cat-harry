@@ -7,13 +7,12 @@ interface Props {
   }>;
 }
 
-export default  function StudiosPage({ searchParams }: Props) {
-
+export default function StudiosPage({ searchParams }: Props) {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#0B0F19] text-white flex items-center justify-center">
-          <p className="text-blue-400 animate-pulse text-lg">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-white flex items-center justify-center transition-colors duration-300">
+          <p className="text-blue-600 dark:text-blue-400 animate-pulse text-lg font-medium">
             Loading studios marketplace...
           </p>
         </div>
@@ -23,5 +22,3 @@ export default  function StudiosPage({ searchParams }: Props) {
     </Suspense>
   );
 }
-
-
