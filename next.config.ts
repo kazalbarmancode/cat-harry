@@ -5,18 +5,18 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
-  },
+images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "**",
+    },
+    {
+      protocol: "http",
+      hostname: "**",
+    },
+  ],
+},
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,

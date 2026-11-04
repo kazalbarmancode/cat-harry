@@ -56,7 +56,6 @@ async function StudioDetailsContent({ params }: Props) {
   }
 
   const studio = await studioRes.json();
-  console.log("details page ", studio);
 
   let hasBooked = false;
   if (userEmail) {

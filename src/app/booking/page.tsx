@@ -9,7 +9,7 @@ async function BookingsContent() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
 
-if (!user?.email) {
+  if (!user?.email) {
     return (
       <div className="text-center py-16 text-slate-900 dark:text-white transition-colors duration-300">
         <h1 className="text-2xl font-semibold mb-2 text-slate-900 dark:text-white">
@@ -21,10 +21,13 @@ if (!user?.email) {
       </div>
     );
   }
-  const token = await getTokenServar()
-  console.log(token)
+
+  const token = await getTokenServar();
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/my-bookings/${user.email}`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
     cache: "no-store",
   });
 

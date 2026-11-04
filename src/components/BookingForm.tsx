@@ -20,7 +20,7 @@ const BookingForm = ({ studio, userEmail }: Props) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleBookingSubmit = async (e: React.FormEvent) => {
+ const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -30,27 +30,34 @@ const BookingForm = ({ studio, userEmail }: Props) => {
       return;
     }
 
-    const bookingData = {
-      studioId: studio._id,
-      studioTitle: studio.title,
-      image: studio.image,
-      location: studio.location,
-      date: bookingDate,
-      userName: name,
-      userEmail: userEmail,
-      status: "Pending",
-    };
-
     try {
       const token = await getTokenClient();
+      
+      if (!token) {
+        toast.error("Session expired. Please log in again.");
+        setLoading(false);
+        return;
+      }
+
+      const bookingData = {
+        studioId: studio._id,
+        studioTitle: studio.title,
+        image: studio.image,
+        location: studio.location,
+        date: bookingDate,
+        userName: name,
+        userEmail: userEmail,
+        status: "Pending",
+      };
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_BACKEND_URL}/booking`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`, 
-      },
-      body: JSON.stringify(bookingData),
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, 
+        },
+        body: JSON.stringify(bookingData),
+      });
 
       const data = await res.json();
       if (res.ok && (data.success || data.acknowledged || data.insertedId)) {
@@ -106,7 +113,6 @@ const BookingForm = ({ studio, userEmail }: Props) => {
           />
         </div>
 
-        {/* Select Booking Date */}
         <div>
           <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300">
             Select Booking Date
@@ -126,7 +132,7 @@ const BookingForm = ({ studio, userEmail }: Props) => {
           disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg transition-colors text-sm font-semibold cursor-pointer shadow-lg shadow-blue-600/20 active:scale-95"
         >
-          {loading ? "Processing..." : "Confirm Booking"}
+          {loading ? "Processing" : "Confirm Booking"}
         </Button>
       </form>
     </div>

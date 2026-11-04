@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏢 StudioSpace - Studio Rental & Studio Package Booking Platform
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+  <p><b>A modern, full-stack web application for booking professional studios and curated travel packages seamlessly.</b></p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  <p>
+    <a href="#-features">Features</a> •
+    <a href="#-tech-stack">Tech Stack</a> •
+    <a href="#-getting-started">Getting Started</a> •
+    <a href="#-environment-variables">Environment Variables</a> •
+    <a href="#-project-structure">Structure</a>
+  </p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</div>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌟 Overview
 
-## Learn More
+**StudioSpace** is a feature-rich, high-performance web platform designed to bridge the gap between studio owners/creators and users looking for premium studio spaces or exclusive travel booking packages. Built with cutting-edge web technologies, it features secure JWT-based authentication, responsive UI layouts, real-time data handling, and optimized booking workflows.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+*   **🔐 Secure Authentication:** Powered by **Better Auth** with token-based security (`jose` and remote JWKS) supporting Google OAuth and credential login.
+*   **🏢 Studio & Package Management:** Browse, filter, and explore comprehensive studio listings and travel packages with high-resolution imagery.
+*   **📅 Interactive Booking Flow:** Seamless booking system with automated state validation, secure API endpoints, and safe JSON response handling.
+*   **👤 User Dashboard:** Dedicated user spaces to manage personal bookings, view history, and handle profile configurations.
+*   **⚡ High Performance:** Built on Next.js App Router with Turbopack, optimized asset delivery, and responsive Tailwind CSS styling.
+*   **🛡️ Robust Error Handling:** Graceful fallback mechanisms for network failures and unauthenticated route protections.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### **Frontend:**
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router, Turbopack)
+*   **Library:** [React.js](https://react.dev/) (ES6+)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/), DaisyUI / HeroUI
+*   **Icons & Assets:** Lucide React
+
+### **Backend & Database:**
+*   **Runtime & Server:** [Node.js](https://nodejs.org/), [Express.js](https://expressjs.com/)
+*   **Database:** [MongoDB](https://www.mongodb.com/) with Mongoose ODM
+*   **Authentication:** [Better Auth](https://better-auth.com/) & `jose`
+
+---
+
